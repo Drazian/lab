@@ -8,7 +8,7 @@ import persistencia.Fecha;
 import persistencia.Hora;
 import persistencia.Profesor;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-03T16:08:57")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-04T17:17:53")
 @StaticMetamodel(Clase.class)
 public class Clase_ { 
 

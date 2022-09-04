@@ -10,7 +10,7 @@ import persistencia.Clases_contenidas;
 import persistencia.Fecha;
 import persistencia.Institucion;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-03T16:08:57")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-04T17:17:53")
 @StaticMetamodel(Actividad.class)
 public class Actividad_ { 
 
