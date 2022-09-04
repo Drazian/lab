@@ -17,6 +17,9 @@ import javax.persistence.Persistence;
 public class Laboratorio {
 
     public static void main(String[] args) {
+        
+        //Test
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
         
         EntityManager em = emf.createEntityManager();
