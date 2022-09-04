@@ -17,10 +17,8 @@ import javax.persistence.Persistence;
 public class Laboratorio {
 
     public static void main(String[] args) {
-        
-        //Test2
-        
-        //Test3
+               
+        //test
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
         
