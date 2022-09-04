@@ -18,7 +18,7 @@ public class Laboratorio {
 
     public static void main(String[] args) {
         
-        //Test
+        //Test2
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
         
