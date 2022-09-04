@@ -20,6 +20,8 @@ public class Laboratorio {
         
         //Test2
         
+        //Test3
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
         
         EntityManager em = emf.createEntityManager();
