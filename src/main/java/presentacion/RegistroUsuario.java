@@ -1,11 +1,20 @@
-package presentacion;
+package laboratorio;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue;    
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import Logica.IController;
+import Logica.Fabrica;
+import Logica.Fecha;
+import Logica.Institucion;
+import Logica.Usuario;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -16,20 +25,30 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.time.LocalDate;
 import java.util.Calendar;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Rectangle;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 public class RegistroUsuario extends JInternalFrame {
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtNickname;
 	private JTextField txtCorreo;
-	private JTextField txtSitioWeb;
-	private JTextField txtDescripcion;
-	private JTextField txtBiografia;
+    
+    private static Fabrica fab= Fabrica.getInstance();
+	private static IController IC=fab.getIController();
+    private JTextField txtDesc;
+    private JTextField txtBio;
+    private JFormattedTextField txtFecha;
+    private JTextField txtUrl;
 
 	/**
 	 * Launch the application.
@@ -38,7 +57,7 @@ public class RegistroUsuario extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroUsuario frame = new RegistroUsuario();
+					RegistroUsuario frame = new RegistroUsuario(IC);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +69,8 @@ public class RegistroUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroUsuario() {
+	public RegistroUsuario(IController ICnt) {
+		IController control = ICnt;
 		setResizable(true);
 		setNormalBounds(new Rectangle(100, 100, 450, 500));
 		setClosable(true);
@@ -64,123 +84,183 @@ public class RegistroUsuario extends JInternalFrame {
 		getContentPane().add(lblIngreseLosSiguientes);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(30, 77, 70, 15);
+		lblNombre.setBounds(30, 61, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
 		txtNombre.setText("Nombre");
-		txtNombre.setBounds(179, 75, 231, 19);
+		txtNombre.setBounds(179, 59, 231, 19);
 		getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(30, 106, 70, 15);
+		lblApellido.setBounds(30, 90, 70, 15);
 		getContentPane().add(lblApellido);
 		
 		JLabel lblNickname = new JLabel("Nickname:");
-		lblNickname.setBounds(30, 137, 84, 15);
+		lblNickname.setBounds(30, 121, 84, 15);
 		getContentPane().add(lblNickname);
 		
 		txtApellido = new JTextField();
 		txtApellido.setText("Apellido");
-		txtApellido.setBounds(179, 104, 231, 19);
+		txtApellido.setBounds(179, 88, 231, 19);
 		getContentPane().add(txtApellido);
 		txtApellido.setColumns(10);
 		
 		txtNickname = new JTextField();
 		txtNickname.setText("Nickname");
-		txtNickname.setBounds(179, 135, 231, 19);
+		txtNickname.setBounds(179, 119, 231, 19);
 		getContentPane().add(txtNickname);
 		txtNickname.setColumns(10);
 		
 		JLabel lblCorreo = new JLabel("Correo electrónico: ");
-		lblCorreo.setBounds(30, 166, 145, 15);
+		lblCorreo.setBounds(30, 150, 145, 15);
 		getContentPane().add(lblCorreo);
 		
 		txtCorreo = new JTextField();
 		txtCorreo.setText("Correo");
-		txtCorreo.setBounds(179, 164, 231, 19);
+		txtCorreo.setBounds(179, 148, 231, 19);
 		getContentPane().add(txtCorreo);
 		txtCorreo.setColumns(10);
 		
 		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento: ");
-		lblFechaDeNacimiento.setBounds(30, 193, 155, 15);
+		lblFechaDeNacimiento.setBounds(30, 177, 155, 15);
 		getContentPane().add(lblFechaDeNacimiento);
 		
 		JButton btnSeleccionarImagen = new JButton("Seleccionar Imagen");
-		btnSeleccionarImagen.setBounds(12, 330, 188, 25);
+		btnSeleccionarImagen.setBounds(30, 199, 188, 25);
 		getContentPane().add(btnSeleccionarImagen);
-		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(97, 377, 117, 25);
-		getContentPane().add(btnAceptar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(237, 377, 117, 25);
-		getContentPane().add(btnCancelar);
-		
-		JSpinner spDia = new JSpinner();
-		spDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-		spDia.setBounds(203, 191, 52, 20);
-		getContentPane().add(spDia);
-		
-		JSpinner spMes = new JSpinner();
-		spMes.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-		spMes.setBounds(275, 191, 52, 20);
-		getContentPane().add(spMes);
-		
-		JSpinner spAnio = new JSpinner();
-		spAnio.setModel(new SpinnerNumberModel(new Integer(2022), new Integer(1900), null, new Integer(1)));
-		spAnio.setBounds(339, 191, 71, 20);
-		getContentPane().add(spAnio);
-		
-		JLabel lblInstituto = new JLabel("Instituto: ");
-		lblInstituto.setBounds(30, 220, 70, 15);
-		getContentPane().add(lblInstituto);
-		
-		JLabel lblDescripcin = new JLabel("Descripción: ");
-		lblDescripcin.setBounds(30, 247, 101, 15);
-		getContentPane().add(lblDescripcin);
-		
-		JLabel lblBiografa = new JLabel("Biografía: ");
-		lblBiografa.setBounds(30, 274, 84, 15);
-		getContentPane().add(lblBiografa);
-		
-		JLabel lblSitioWeb = new JLabel("Sitio web: ");
-		lblSitioWeb.setBounds(30, 301, 84, 15);
-		getContentPane().add(lblSitioWeb);
-		
-		txtSitioWeb = new JTextField();
-		txtSitioWeb.setText("Sitio web");
-		txtSitioWeb.setBounds(179, 299, 231, 19);
-		getContentPane().add(txtSitioWeb);
-		txtSitioWeb.setColumns(10);
-		
-		JComboBox cbInstituto = new JComboBox();
-		cbInstituto.setModel(new DefaultComboBoxModel(new String[] {"Instituto1", "Instituto2", "Instituto3"}));
-		cbInstituto.setBounds(179, 220, 231, 24);
-		getContentPane().add(cbInstituto);
-		
-		txtDescripcion = new JTextField();
-		txtDescripcion.setText("Descripcion");
-		txtDescripcion.setBounds(179, 247, 231, 19);
-		getContentPane().add(txtDescripcion);
-		txtDescripcion.setColumns(10);
-		
-		txtBiografia = new JTextField();
-		txtBiografia.setText("Biografia");
-		txtBiografia.setBounds(179, 272, 231, 19);
-		getContentPane().add(txtBiografia);
-		txtBiografia.setColumns(10);
-		
-		JComboBox cbTipo = new JComboBox();
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Cliente", "Profesor"}));
-		cbTipo.setBounds(179, 27, 231, 24);
-		getContentPane().add(cbTipo);
-		
+			
 		JLabel lblTipoDeUsuario = new JLabel("Tipo de Usuario:");
 		lblTipoDeUsuario.setBounds(26, 32, 130, 15);
 		getContentPane().add(lblTipoDeUsuario);
+		
+		JComboBox cbTipo = new JComboBox();
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Cliente"}));
+		if(control.getIns()!=null) {
+			cbTipo.addItem("Profesor");
+		}
+		cbTipo.setBounds(179, 27, 231, 24);
+		getContentPane().add(cbTipo);
+		
+		JComboBox cmbInst = new JComboBox();
+		if(control.getIns()!=null) {
+			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
+				cmbInst.addItem(hm.getKey());	
+			}
+		}
+		cmbInst.setBounds(144, 257, 284, 24);
+		getContentPane().add(cmbInst);
+		
+		JLabel lblInstitucion = new JLabel("Institucion");
+		lblInstitucion.setBounds(30, 262, 96, 15);
+		getContentPane().add(lblInstitucion);
+		
+		JLabel lblBiografia = new JLabel("Biografia");
+		lblBiografia.setBounds(30, 311, 70, 15);
+		getContentPane().add(lblBiografia);
+		
+		JLabel lblDescripcion = new JLabel("Descripcion");
+		lblDescripcion.setBounds(30, 350, 84, 15);
+		getContentPane().add(lblDescripcion);
+		
+		txtDesc = new JTextField();
+		txtDesc.setBounds(144, 346, 284, 19);
+		getContentPane().add(txtDesc);
+		txtDesc.setColumns(10);
+		
+		txtBio = new JTextField();
+		txtBio.setBounds(144, 309, 284, 19);
+		getContentPane().add(txtBio);
+		txtBio.setColumns(10);
+		
+		txtFecha = new JFormattedTextField(LocalDate.now());
+		txtFecha.setBounds(179, 179, 231, 15);
+		getContentPane().add(txtFecha);
+		txtFecha.setColumns(10);
+		
+		JLabel lblPaginaweb = new JLabel("PaginaWeb");
+		lblPaginaweb.setBounds(30, 230, 84, 15);
+		getContentPane().add(lblPaginaweb);
+		
+		txtUrl = new JTextField();
+		txtUrl.setBounds(137, 228, 291, 19);
+		getContentPane().add(txtUrl);
+		txtUrl.setColumns(10);
+		
+		JButton btnCancelar_1 = new JButton("Cancelar");
+		btnCancelar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiar();
+                setVisible(false);
+			}
+		});
+		
+		JButton btnAceptar_1 = new JButton("Aceptar");
+		btnAceptar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(control.getUsr().containsKey(txtNickname.getText())) {
+					JFrame f=new JFrame();
+					JOptionPane.showMessageDialog(f, "Ese Nickname ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
+				}else{
+					boolean OK=false;
+					for(Map.Entry<String, Usuario> hm:control.getUsr().entrySet()) {
+						if(hm.getValue().getMail()==txtCorreo.getText()) {
+							OK=true;
+						}
+					}
+					if(OK) {
+						JFrame f=new JFrame();
+						JOptionPane.showMessageDialog(f, "Ese Mail ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						Fecha f=new Fecha((LocalDate) txtFecha.getValue());
+						if(cbTipo.getSelectedItem()=="Cliente") {
+							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f);
+						}else {
+							Institucion i=control.getIns().get(cmbInst.getSelectedItem().toString());
+							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i);
+						}
+					}	
+				}
+			}
+		});
+		btnAceptar_1.setBounds(58, 377, 117, 25);
+		getContentPane().add(btnAceptar_1);
+		btnCancelar_1.setBounds(240, 377, 117, 25);
+		getContentPane().add(btnCancelar_1);
 
 	}
+	private void limpiar() {
+		txtNombre.setText("Nombre");
+		txtApellido.setText("Apellido");
+		txtNickname.setText("Nickname");
+		txtCorreo.setText("Mail");
+		txtFecha.setValue(LocalDate.now());
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
