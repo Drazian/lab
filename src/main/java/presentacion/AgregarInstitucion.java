@@ -3,8 +3,8 @@ package laboratorio;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import Logica.Fabrica;
-import Logica.IController;
+import persistencia.Fabrica;
+import persistencia.IController;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
