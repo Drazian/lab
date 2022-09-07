@@ -25,8 +25,8 @@ public class Profesor extends Usuario implements Serializable{
 	
         public Profesor(){}
         
-	public Profesor(String ni, String n, String ap, String ma, String desc, String bio, String web, LocalDate f, Institucion i, LocalDate fc) {
-		super(ni, n, ap, ma, f, fc);
+	public Profesor(String ni, String n, String ap, String ma, String desc, String bio, String web, LocalDate f, Institucion i, LocalDate fc, String foto) {
+		super(ni, n, ap, ma, f, fc, foto);
 		this.descripcion = desc;
 		this.biografia = bio;
 		this.sitio_web = web;
