@@ -15,19 +15,20 @@ import java.time.*;
 public class Usuario implements Serializable{
         @Id
 	private String nickname;
-        private String nombre,apellido,mail;
+        private String nombre,apellido,mail,foto;
 	private LocalDate fechanac;
         private LocalDate fechaCreado;
 	
         public Usuario(){}
         
-	public Usuario(String ni, String n, String ap, String ma, LocalDate f, LocalDate fechaC) {
+	public Usuario(String ni, String n, String ap, String ma, LocalDate f, LocalDate fechaC, String fot) {
         this.nickname = ni;
-		this.nombre = n;
+	this.nombre = n;
         this.apellido = ap;
         this.mail = ma;
         this.fechanac = f;
         this.fechaCreado=fechaC;
+	this.foto=fot;
     }
         
         public Usuario(String ni, String n, String ap, String ma, LocalDate f) {
@@ -93,6 +94,14 @@ public class Usuario implements Serializable{
 
     public void setFechaCreado(LocalDate fechaCreado) {
         this.fechaCreado = fechaCreado;
+    }
+    
+    public String getFoto() {
+    	return foto;
+    }
+
+    public void setFoto(String ap) {
+        foto = ap;
     }
     
 }
