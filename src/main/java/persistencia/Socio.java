@@ -3,6 +3,7 @@ package persistencia;
 import java.util.HashSet;
 
 import java.io.Serializable;
+import java.time.*;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +15,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 public class Socio extends Usuario implements Serializable{
-	private HashSet<Fecha_Compra> cupon;
-	private HashSet<Fecha_Registro> anotado;
+	private HashSet<LocalDate> cupon;
+	private HashSet<LocalDate> anotado;
 	
-	public Socio(String ni, String n, String ap, String ma, Fecha f) {
-		super(ni, n, ap, ma, f);
-		this.cupon = new HashSet<Fecha_Compra>();
-		this.anotado = new HashSet<Fecha_Registro>();
+        public Socio(){}
+        
+	public Socio(String ni, String n, String ap, String ma, LocalDate f, LocalDate fc) {
+		super(ni, n, ap, ma, f, fc);
+		this.cupon = new HashSet<LocalDate>();
+		this.anotado = new HashSet<LocalDate>();
 	}
 	
 }

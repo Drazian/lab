@@ -9,20 +9,34 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.time.*;
 
 @Entity
-class Usuario implements Serializable{
+public class Usuario implements Serializable{
         @Id
 	private String nickname;
         private String nombre,apellido,mail;
-	private Fecha fechanac;
+	private LocalDate fechanac;
+        private LocalDate fechaCreado;
 	
-	public Usuario(String ni, String n, String ap, String ma, Fecha f) {
+        public Usuario(){}
+        
+	public Usuario(String ni, String n, String ap, String ma, LocalDate f, LocalDate fechaC) {
         this.nickname = ni;
 		this.nombre = n;
         this.apellido = ap;
         this.mail = ma;
         this.fechanac = f;
+        this.fechaCreado=fechaC;
+    }
+        
+        public Usuario(String ni, String n, String ap, String ma, LocalDate f) {
+        this.nickname = ni;
+		this.nombre = n;
+        this.apellido = ap;
+        this.mail = ma;
+        this.fechanac = f;
+        //this.fechaCreado=fechaC;
     }
 
     public String getNick() {
@@ -41,7 +55,7 @@ class Usuario implements Serializable{
         return mail;
     }
 
-    public Fecha getFechanac() {
+    public LocalDate getFechanac() {
         return fechanac;
     }
     
@@ -61,8 +75,24 @@ class Usuario implements Serializable{
         mail = ap;
     }
 
-    public void setFechanac(Fecha ap) {
+    public void setFechanac(LocalDate ap) {
         fechanac = ap;
     }
-	
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public LocalDate getFechaCreado() {
+        return fechaCreado;
+    }
+
+    public void setFechaCreado(LocalDate fechaCreado) {
+        this.fechaCreado = fechaCreado;
+    }
+    
 }

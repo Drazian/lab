@@ -14,6 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Institucion implements Serializable{
         @Id
 	private String nombre;
+        
+        public Institucion(){}
 	
 	public Institucion(String n) {
 		this.nombre=n;

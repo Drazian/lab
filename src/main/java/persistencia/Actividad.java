@@ -4,10 +4,13 @@ import java.util.HashSet;
 import java.util.HashMap; 
 
 import java.io.Serializable;
+import java.time.*;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,13 +22,17 @@ public class Actividad implements Serializable{
 	private String nombre;
         private String descripcion;
        	private int costo, duracion;
-	private Fecha fecha_reg;
+	private LocalDate fecha_reg;
 	private Institucion ins;
+        
+        @ManyToMany
 	private HashSet<Clases_contenidas> asociadas;
-	private HashMap<String, Clase> cls;
+	
+        @ManyToOne
+        private HashMap<String, Clase> cls;
 	
 	
-	public Actividad(String n, String d, int c, int dur, Fecha f, Institucion i) {
+	public Actividad(String n, String d, int c, int dur, LocalDate f, Institucion i) {
 		this.costo = c;
 		this.duracion = dur;
 		this.descripcion = d;
@@ -52,7 +59,7 @@ public class Actividad implements Serializable{
         return duracion;
     }
     
-    public Fecha getFecha_reg() {
+    public LocalDate getFecha_reg() {
     	return fecha_reg;
     }
     
@@ -72,7 +79,7 @@ public class Actividad implements Serializable{
     	costo = ap;
     }
     
-    public void setFecha_reg(Fecha f) {
+    public void setFecha_reg(LocalDate f) {
     	fecha_reg = f;
     }
     
