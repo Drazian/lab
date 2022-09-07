@@ -127,8 +127,23 @@ public class RegistroUsuario extends JInternalFrame {
 		lblFechaDeNacimiento.setBounds(30, 177, 155, 15);
 		getContentPane().add(lblFechaDeNacimiento);
 		
+		txtFile = new JTextField();
+		txtFile.setEditable(false);
+		txtFile.setBounds(220, 199, 190, 19);
+		getContentPane().add(txtFile);
+		txtFile.setColumns(10);
+		
 		JButton btnSeleccionarImagen = new JButton("Seleccionar Imagen");
-		btnSeleccionarImagen.setBounds(30, 199, 188, 25);
+		btnSeleccionarImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				int result = fc.showOpenDialog(null);
+				if (result == JFileChooser.APPROVE_OPTION) {
+				 txtFile.setText(fc.getSelectedFile().getAbsolutePath());
+				 }
+			}
+		});
+		btnSeleccionarImagen.setBounds(30, 199, 178, 25);
 		getContentPane().add(btnSeleccionarImagen);
 			
 		JLabel lblTipoDeUsuario = new JLabel("Tipo de Usuario:");
@@ -215,10 +230,10 @@ public class RegistroUsuario extends JInternalFrame {
 					}else {
 						Fecha f=new Fecha((LocalDate) txtFecha.getValue());
 						if(cbTipo.getSelectedItem()=="Cliente") {
-							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f);
+							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,txtFile.getText());
 						}else {
 							Institucion i=control.getIns().get(cmbInst.getSelectedItem().toString());
-							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i);
+							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i,txtFile.getText());
 						}
 					}	
 				}
