@@ -9,13 +9,13 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Institucion;
-import Logica.Actividad;
-import Logica.Profesor;
-import Logica.Clase;
-import Logica.Fecha;
-import Logica.Hora;
+import persistencia.IController;
+import persistencia.Institucion;
+import persistencia.Actividad;
+import persistencia.Profesor;
+import persistencia.Clase;
+import persistencia.Fecha;
+import persistencia.Hora;
 
 import java.awt.GridLayout;
 import java.time.LocalDate;
