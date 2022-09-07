@@ -9,9 +9,9 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Institucion;
-import Logica.Fecha;
+import persistencia.IController;
+import persistencia.Institucion;
+import persistencia.Fecha;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
