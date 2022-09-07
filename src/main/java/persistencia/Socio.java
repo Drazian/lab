@@ -20,8 +20,8 @@ public class Socio extends Usuario implements Serializable{
 	
         public Socio(){}
         
-	public Socio(String ni, String n, String ap, String ma, LocalDate f, LocalDate fc) {
-		super(ni, n, ap, ma, f, fc);
+	public Socio(String ni, String n, String ap, String ma, LocalDate f, LocalDate fc, String foto) {
+		super(ni, n, ap, ma, f, fc, foto);
 		this.cupon = new HashSet<LocalDate>();
 		this.anotado = new HashSet<LocalDate>();
 	}
