@@ -9,11 +9,11 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Fabrica;
-import Logica.Fecha;
-import Logica.Institucion;
-import Logica.Usuario;
+import persistencia.IController;
+import persistencia.Fabrica;
+import persistencia.Fecha;
+import persistencia.Institucion;
+import persistencia.Usuario;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
