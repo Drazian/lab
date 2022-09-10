@@ -67,7 +67,7 @@ public class RegistroClase extends JInternalFrame {
 		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
-		setTitle("Registro Dictado de Clase");
+		setTitle("Registro de Clase");
 		setBounds(100, 100, 450, 384);
 		getContentPane().setLayout(null);
 		
