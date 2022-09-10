@@ -38,7 +38,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class RegistroDictadoClase extends JInternalFrame {
+public class RegistroClase extends JInternalFrame {
 	private IController ICnt;
 	private JTextField txtNombre;
 	private JTextField txtUrl;
@@ -51,7 +51,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroDictadoClase frame = new RegistroDictadoClase();
+					RegistroClase frame = new RegistroClase();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +63,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroDictadoClase() {
+	public RegistroClase() {
 		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
