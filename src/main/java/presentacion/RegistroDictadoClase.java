@@ -229,9 +229,11 @@ public class RegistroDictadoClase extends JInternalFrame {
 									JOptionPane.showMessageDialog(f, "Ese Socio ya esta registrado a esta Clase, por favor seleccione otro.", "Error", JOptionPane.ERROR_MESSAGE);
 								}else {
 									s.registrarse(c);
+									c.agregarRegistrado();
 								}
 							}else {
 								s.registrarse(c);
+								c.agregarRegistrado();
 							}
 						}
 					}
