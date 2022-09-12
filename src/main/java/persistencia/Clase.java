@@ -21,7 +21,7 @@ public class Clase implements Serializable{
         @Id
 	private String nombre;
         private String url;
-	private int regitrados_min,regitrados_max;
+	private int regitrados_min,regitrados_max,cantRegistrados;
 	private LocalDate fecha_reg, fecha_dict;
 	private LocalTime hora_dict;
         
@@ -43,6 +43,7 @@ public class Clase implements Serializable{
 		this.act = a;
 		this.prof = p;
 		this.hora_dict = h;
+		this.cantRegistrados=0;
 	}
 
     public String getNombre() {
@@ -81,6 +82,10 @@ public class Clase implements Serializable{
     	return hora_dict;
     }
     
+    public int getRegis() {
+    	return cantRegistrados;
+    }
+    
     public void setNombre(String n) {
         nombre = n;
     }
@@ -115,5 +120,9 @@ public class Clase implements Serializable{
     
     public void setHora_dict(LocalTime h) {
     	hora_dict = h;
+    }
+    
+    public void agregarRegistrado() {
+    	cantRegistrados=(cantRegistrados+1);
     }
 }
