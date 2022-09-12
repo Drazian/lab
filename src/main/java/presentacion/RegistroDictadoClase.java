@@ -1,11 +1,25 @@
 package presentacion;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import presentacion.IController;
+import presentacion.Actividad;
+import presentacion.Clase;
+import presentacion.Fabrica;
+import presentacion.Fecha;
+import presentacion.Institucion;
+import presentacion.Usuario;
+import presentacion.Profesor;
+import presentacion.Socio;
+import presentacion.Fecha_Registro;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -16,12 +30,19 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Calendar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 public class RegistroDictadoClase extends JInternalFrame {
-	private JTextField txtNombre;
+    
+    private static Fabrica fab= Fabrica.getInstance();
+	private static IController IC=fab.getIController();
 	private JTextField txtUrl;
 
 	/**
@@ -31,7 +52,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroDictadoClase frame = new RegistroDictadoClase();
+					RegistroDictadoClase frame = new RegistroDictadoClase(IC);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,11 +64,12 @@ public class RegistroDictadoClase extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroDictadoClase() {
+	public RegistroDictadoClase(IController ICnt) {
+		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
 		setTitle("Registro Dictado de Clase");
-		setBounds(100, 100, 450, 384);
+		setBounds(100, 100, 450, 456);
 		getContentPane().setLayout(null);
 		
 		JLabel lblIngreseLosSiguientes = new JLabel("Ingrese los siguientes datos:");
@@ -55,41 +77,36 @@ public class RegistroDictadoClase extends JInternalFrame {
 		lblIngreseLosSiguientes.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblIngreseLosSiguientes);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(97, 310, 117, 25);
-		getContentPane().add(btnAceptar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(240, 310, 117, 25);
-		getContentPane().add(btnCancelar);
-		
 		JLabel lblInstitucin = new JLabel("Institución:");
 		lblInstitucin.setBounds(30, 46, 92, 15);
 		getContentPane().add(lblInstitucin);
 		
-		JComboBox cbInstituto = new JComboBox();
-		cbInstituto.setModel(new DefaultComboBoxModel(new String[] {"Instituto1", "Instituto2", "Instituto3"}));
-		cbInstituto.setBounds(179, 39, 231, 24);
-		getContentPane().add(cbInstituto);
+		JComboBox cmbInstituto = new JComboBox();
+		if(control.getIns()!=null) {
+			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
+				cmbInstituto.addItem(hm.getKey());	
+			}
+		}
+		cmbInstituto.setBounds(179, 39, 231, 24);
+		getContentPane().add(cmbInstituto);
 		
-		JComboBox cbActividadDeportiva = new JComboBox();
-		cbActividadDeportiva.setBounds(179, 75, 231, 24);
-		getContentPane().add(cbActividadDeportiva);
+		JComboBox cmbActividad = new JComboBox();
+		if(control.getIns()!=null) {
+			Institucion i=control.getIns().get(cmbInstituto.getSelectedItem().toString());
+			if(i.getActividades()!=null) {
+				Iterator <Actividad> ita= i.getActividades().iterator();
+				while(ita.hasNext()) {
+					cmbActividad.addItem(ita.next().getNombre());
+				}				
+			}			
+		}
+		cmbActividad.setBounds(179, 75, 231, 24);
+		getContentPane().add(cmbActividad);
 		
-		JSpinner spDia = new JSpinner();
-		spDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-		spDia.setBounds(179, 134, 52, 20);
-		getContentPane().add(spDia);
-		
-		JSpinner spMes = new JSpinner();
-		spMes.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-		spMes.setBounds(251, 134, 52, 20);
-		getContentPane().add(spMes);
-		
-		JSpinner spAnio = new JSpinner();
-		spAnio.setModel(new SpinnerNumberModel(new Integer(2022), new Integer(1900), null, new Integer(1)));
-		spAnio.setBounds(315, 134, 71, 20);
-		getContentPane().add(spAnio);
+		JFormattedTextField txtFecha = new JFormattedTextField();
+		txtFecha.setEditable(false);
+		txtFecha.setBounds(179, 134, 231, 20);
+		getContentPane().add(txtFecha);
 		
 		JLabel lblActividadDeportiva = new JLabel("Actividad Deportiva:");
 		lblActividadDeportiva.setBounds(30, 80, 149, 15);
@@ -107,12 +124,6 @@ public class RegistroDictadoClase extends JInternalFrame {
 		lblProfesor.setBounds(30, 195, 70, 15);
 		getContentPane().add(lblProfesor);
 		
-		txtNombre = new JTextField();
-		txtNombre.setText("Nombre");
-		txtNombre.setBounds(179, 111, 231, 19);
-		getContentPane().add(txtNombre);
-		txtNombre.setColumns(10);
-		
 		JLabel lblHoraInicio = new JLabel("Hora inicio:");
 		lblHoraInicio.setBounds(30, 168, 92, 15);
 		getContentPane().add(lblHoraInicio);
@@ -129,35 +140,110 @@ public class RegistroDictadoClase extends JInternalFrame {
 		lblUrl.setBounds(30, 281, 70, 15);
 		getContentPane().add(lblUrl);
 		
-		JSpinner spHora = new JSpinner();
-		spHora.setModel(new SpinnerNumberModel(0, 0, 24, 1));
-		spHora.setBounds(179, 166, 52, 20);
-		getContentPane().add(spHora);
+		JFormattedTextField txtHora = new JFormattedTextField();
+		txtHora.setEditable(false);
+		txtHora.setBounds(179, 166, 231, 20);
+		getContentPane().add(txtHora);
 		
-		JSpinner SpMinuto = new JSpinner();
-		SpMinuto.setModel(new SpinnerNumberModel(0, 0, 60, 1));
-		SpMinuto.setBounds(251, 166, 52, 20);
-		getContentPane().add(SpMinuto);
+		JTextField txtProfesor = new JTextField();
+		txtProfesor.setEditable(false);
+		txtProfesor.setText("Profesor");
+		txtProfesor.setBounds(179, 195, 231, 24);
+		getContentPane().add(txtProfesor);
 		
-		JComboBox cbProfesor = new JComboBox();
-		cbProfesor.setBounds(179, 195, 231, 24);
-		getContentPane().add(cbProfesor);
+		JTextField txtMin = new JTextField();
+		txtMin.setEditable(false);
+		txtMin.setBounds(179, 241, 52, 20);
+		getContentPane().add(txtMin);
 		
-		JSpinner spSocioMinimo = new JSpinner();
-		spSocioMinimo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		spSocioMinimo.setBounds(179, 241, 52, 20);
-		getContentPane().add(spSocioMinimo);
-		
-		JSpinner spSocioMaximo = new JSpinner();
-		spSocioMaximo.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-		spSocioMaximo.setBounds(358, 241, 52, 20);
-		getContentPane().add(spSocioMaximo);
+		JTextField txtMax = new JTextField();
+		txtMax.setEditable(false);
+		txtMax.setBounds(358, 241, 52, 20);
+		getContentPane().add(txtMax);
 		
 		txtUrl = new JTextField();
+		txtUrl.setEditable(false);
 		txtUrl.setText("URL");
 		txtUrl.setBounds(179, 279, 231, 19);
 		getContentPane().add(txtUrl);
 		txtUrl.setColumns(10);
+		
+		JLabel lblSocio = new JLabel("Socio");
+		lblSocio.setBounds(30, 334, 70, 15);
+		getContentPane().add(lblSocio);
+		
+		JComboBox cmbSocio = new JComboBox();
+		if(control.getUsr()!=null) {
+			for(Map.Entry<String,Usuario> hm:control.getUsr().entrySet()) {
+				if(hm.getValue() instanceof Socio) {
+					cmbSocio.addItem(hm.getKey());
+				}
+			}
+		}
+		cmbSocio.setBounds(182, 329, 228, 24);
+		getContentPane().add(cmbSocio);
+		
+		JComboBox cmbNombre = new JComboBox();
+		if(control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases()!=null) {
+			Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
+			for(Map.Entry<String, Clase> hm:a.getClases().entrySet()) {
+				cmbNombre.addItem(hm.getKey());	
+			}
+		}
+		cmbNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
+				txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict().getFecha());
+				txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict().getHora());
+				txtProfesor.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getProf().getNick());
+				txtMin.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmin()));
+				txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRax()));
+				txtUrl.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getUrl());
+				
+			}
+		});
+		cmbNombre.setBounds(179, 111, 231, 19);
+		getContentPane().add(cmbNombre);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(control.getUsr()!=null) {
+					if(cmbSocio.getItemCount()>0) {
+						Clase c=control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases().get(cmbNombre.getSelectedItem().toString());
+						if(c.getRegis()==c.getRax()) {
+							JFrame f=new JFrame();
+							JOptionPane.showMessageDialog(f, "Los cupos de esa Clase ya se llenaron, por favor seleccione otra.", "Error", JOptionPane.ERROR_MESSAGE);
+						}else {
+							Socio s=(Socio) control.getUsr().get(cmbSocio.getSelectedItem().toString());
+							if(s.getClases()!=null) {
+								Iterator<Fecha_Registro> itfr=s.getClases().iterator();
+								boolean registrado=false;
+								while((itfr.hasNext())&&(!registrado)) {
+									if(itfr.next().getClase().getNombre()==c.getNombre()) {
+										registrado=true;
+									}
+								}
+								if(registrado) {
+									JFrame f=new JFrame();
+									JOptionPane.showMessageDialog(f, "Ese Socio ya esta registrado a esta Clase, por favor seleccione otro.", "Error", JOptionPane.ERROR_MESSAGE);
+								}else {
+									s.registrarse(c);
+								}
+							}else {
+								s.registrarse(c);
+							}
+						}
+					}
+				}
+			}
+		});
+		btnAceptar.setBounds(97, 383, 117, 25);
+		getContentPane().add(btnAceptar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(240, 383, 117, 25);
+		getContentPane().add(btnCancelar);
 
 	}
 }
