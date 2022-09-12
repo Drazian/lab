@@ -26,4 +26,13 @@ public class Socio extends Usuario implements Serializable{
 		this.anotado = new HashSet<LocalDate>();
 	}
 	
+	public HashSet<Fecha_Registro> getClases(){
+		return anotado;
+	}
+	
+	public void registrarse(Clase c) {
+		Fecha_Registro fr=new Fecha_Registro(this,c,LocalDate.now());
+		anotado.add(fr);
+	}
+	
 }
