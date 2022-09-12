@@ -242,6 +242,11 @@ public class RegistroDictadoClase extends JInternalFrame {
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                		setVisible(false);
+			}
+		});
 		btnCancelar.setBounds(240, 383, 117, 25);
 		getContentPane().add(btnCancelar);
 
