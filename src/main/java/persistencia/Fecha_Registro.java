@@ -1,11 +1,13 @@
 package persistencia;
 
+import java.time.*;
+
 public class Fecha_Registro {
 	private Socio sc;
 	private Clase cls;
 	private Fecha fch;
 	
-	public Fecha_Registro(Socio s, Clase c, Fecha f) {
+	public Fecha_Registro(Socio s, Clase c, LocalDate f) {
 		this.sc=s;
 		this.cls=c;
 		this.fch=f;
@@ -19,7 +21,7 @@ public class Fecha_Registro {
 		return cls;
 	}
 	
-	public Fecha getFecha() {
+	public LocalDate getFecha() {
 		return fch;
 	}
 	
@@ -31,7 +33,7 @@ public class Fecha_Registro {
 		cls=c;
 	}
 	
-	public void setFecha(Fecha f) {
+	public void setFecha(LocalDate f) {
 		fch=f;
 	}
 }
