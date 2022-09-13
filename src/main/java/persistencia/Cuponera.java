@@ -56,6 +56,10 @@ public class Cuponera implements Serializable{
     	return fecha_fin;
     }
     
+    public HashSet<Clases_contenidas> getClsCont(){
+    	return cont;
+    }
+    
     public void setNombre(String n) {
         nombre = n;
     }
