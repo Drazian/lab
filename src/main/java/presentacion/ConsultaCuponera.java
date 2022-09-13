@@ -1,6 +1,12 @@
 package presentacion;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
+
+import persistencia.IController;
+import persistencia.Cuponera;
+import persistencia.Institucion;
+import persistencia.Actividad;
+import persistencia.Clases_contenidas;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -15,17 +21,26 @@ import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import java.time.*;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Calendar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
+import javax.swing.JFormattedTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ConsultaCuponera extends JInternalFrame {
-	private JTextField txtNombre;
-	private JTextField txtDescripcin;
-	private JTable tbCuponera;
-	private JTable tbActividades;
+	private IController ICnt;
+	private JComboBox cmbNombre;
+	private JTextField txtCpnDesc;
+	private JTextField txtActDesc;
+	private JTextField txtIns;
+	private JTextField txtCosto;
+	private JTextField txtCant;
 
 	/**
 	 * Launch the application.
@@ -47,98 +62,152 @@ public class ConsultaCuponera extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaCuponera() {
+		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
-		setTitle("Consulta Cuponera");
-		setBounds(100, 100, 450, 599);
+		setTitle("Consultar Cuponera");
+		setBounds(100, 100, 509, 426);
 		getContentPane().setLayout(null);
 		
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(100, 530, 117, 25);
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnAceptar.setBounds(164, 354, 117, 25);
 		getContentPane().add(btnAceptar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(243, 530, 117, 25);
-		getContentPane().add(btnCancelar);
-		
-		JSpinner spDia = new JSpinner();
-		spDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-		spDia.setBounds(183, 269, 52, 20);
-		getContentPane().add(spDia);
-		
-		JSpinner spMes = new JSpinner();
-		spMes.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-		spMes.setBounds(255, 269, 52, 20);
-		getContentPane().add(spMes);
-		
-		JSpinner spAnio = new JSpinner();
-		spAnio.setModel(new SpinnerNumberModel(new Integer(2022), new Integer(1900), null, new Integer(1)));
-		spAnio.setBounds(319, 269, 71, 20);
-		getContentPane().add(spAnio);
+		JTextField txtInicio = new JTextField();
+		txtInicio.setEditable(false);
+		txtInicio.setBounds(207, 66, 264, 20);
+		getContentPane().add(txtInicio);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(34, 213, 70, 15);
+		lblNombre.setBounds(34, 14, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha inicio:");
-		lblFechaInicio.setBounds(34, 269, 92, 15);
+		lblFechaInicio.setBounds(34, 68, 92, 15);
 		getContentPane().add(lblFechaInicio);
 		
-		txtNombre = new JTextField();
-		txtNombre.setText("Nombre");
-		txtNombre.setBounds(183, 211, 231, 19);
-		getContentPane().add(txtNombre);
-		txtNombre.setColumns(10);
-		
 		JLabel lblDescuento = new JLabel("Descuento (%):");
-		lblDescuento.setBounds(34, 335, 117, 15);
+		lblDescuento.setBounds(34, 139, 117, 15);
 		getContentPane().add(lblDescuento);
 		
-		JSpinner spSocioMinimo = new JSpinner();
-		spSocioMinimo.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		spSocioMinimo.setBounds(183, 333, 52, 20);
-		getContentPane().add(spSocioMinimo);
+		JTextField txtDesc = new JTextField();
+		txtDesc.setEditable(false);
+		txtDesc.setBounds(207, 137, 52, 20);
+		getContentPane().add(txtDesc);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-		spinner.setBounds(183, 301, 52, 20);
-		getContentPane().add(spinner);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-		spinner_1.setBounds(255, 301, 52, 20);
-		getContentPane().add(spinner_1);
-		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setModel(new SpinnerNumberModel(new Integer(2022), new Integer(1900), null, new Integer(1)));
-		spinner_2.setBounds(319, 301, 71, 20);
-		getContentPane().add(spinner_2);
+		JTextField txtFin = new JTextField();
+		txtFin.setEditable(false);
+		txtFin.setBounds(207, 102, 264, 20);
+		getContentPane().add(txtFin);
 		
 		JLabel lblFechaFin = new JLabel("Fecha fin:");
-		lblFechaFin.setBounds(34, 301, 92, 15);
+		lblFechaFin.setBounds(34, 104, 92, 15);
 		getContentPane().add(lblFechaFin);
 		
 		JLabel lblDescripcin = new JLabel("Descripción:");
-		lblDescripcin.setBounds(34, 242, 117, 15);
+		lblDescripcin.setBounds(34, 41, 117, 15);
 		getContentPane().add(lblDescripcin);
 		
-		txtDescripcin = new JTextField();
-		txtDescripcin.setText("Descripción");
-		txtDescripcin.setBounds(183, 240, 231, 19);
-		getContentPane().add(txtDescripcin);
-		txtDescripcin.setColumns(10);
-		
-		tbCuponera = new JTable();
-		tbCuponera.setBounds(12, 12, 416, 187);
-		getContentPane().add(tbCuponera);
-		
-		tbActividades = new JTable();
-		tbActividades.setBounds(12, 398, 416, 112);
-		getContentPane().add(tbActividades);
+		txtCpnDesc = new JTextField("Descripcion");
+		txtCpnDesc.setEditable(false);
+		txtCpnDesc.setText("Descripción");
+		txtCpnDesc.setBounds(207, 35, 264, 19);
+		getContentPane().add(txtCpnDesc);
+		txtCpnDesc.setColumns(10);
 		
 		JLabel lblActividadesDeportivas = new JLabel("Actividades deportivas:");
-		lblActividadesDeportivas.setBounds(12, 371, 192, 15);
+		lblActividadesDeportivas.setBounds(12, 166, 192, 15);
 		getContentPane().add(lblActividadesDeportivas);
+		
+		JComboBox cmbAct = new JComboBox();
+		cmbAct.addItem(" ");
+		cmbAct.setBounds(207, 161, 264, 24);
+		getContentPane().add(cmbAct);
+		
+		JLabel lblDescripcionDe = new JLabel("Descripción de Actividad:");
+		lblDescripcionDe.setBounds(12, 197, 177, 25);
+		getContentPane().add(lblDescripcionDe);
+		
+		txtActDesc = new JTextField("Descripción de la Actividad");
+		txtActDesc.setEditable(false);
+		txtActDesc.setBounds(207, 200, 264, 19);
+		getContentPane().add(txtActDesc);
+		txtActDesc.setColumns(10);
+		
+		JLabel lblInstitucin = new JLabel("Institución:");
+		lblInstitucin.setBounds(37, 237, 114, 20);
+		getContentPane().add(lblInstitucin);
+		
+		txtIns = new JTextField("Intitución");
+		txtIns.setEditable(false);
+		txtIns.setBounds(207, 238, 264, 19);
+		getContentPane().add(txtIns);
+		txtIns.setColumns(10);
+		
+		JLabel lblCosto = new JLabel("Costo:");
+		lblCosto.setBounds(34, 269, 70, 15);
+		getContentPane().add(lblCosto);
+		
+		txtCosto = new JTextField();
+		txtCosto.setEditable(false);
+		txtCosto.setBounds(207, 267, 52, 19);
+		getContentPane().add(txtCosto);
+		txtCosto.setColumns(10);
+		
+		JLabel lblCantidadDeClases = new JLabel("Cantidad de Clases:");
+		lblCantidadDeClases.setBounds(34, 296, 155, 15);
+		getContentPane().add(lblCantidadDeClases);
+		
+		txtCant = new JTextField();
+		txtCant.setEditable(false);
+		txtCant.setBounds(207, 298, 52, 19);
+		getContentPane().add(txtCant);
+		txtCant.setColumns(10);
+		
+		cmbNombre = new JComboBox();
+		cmbNombre.addItem(" ");
+		if(control.getCpn()!=null) {
+			for(Map.Entry<String, Cuponera> hm:control.getCpn().entrySet()) {
+				cmbNombre.addItem(hm.getKey());
+			}
+		}
+		cmbNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Cuponera cpn=control.getCpn().get(cmbNombre.getSelectedItem().toString());
+				txtCpnDesc.setText(cpn.getDescripcion());
+				txtInicio.setText(cpn.getFecha_ini().getFecha().toString());
+				txtFin.setText(cpn.getFecha_fin().getFecha().toString());
+				txtDesc.setText(Integer.toString(cpn.getDescuento()));
+				if(cmbAct.getItemCount()>1) {
+					cmbAct.removeAllItems();
+					cmbAct.addItem(" ");
+				}
+				Iterator<Clases_contenidas> ita=cpn.getClsCont().iterator();
+				while(ita.hasNext()) {
+					cmbAct.addItem(ita.next().getAct().getNombre());
+				}
+			}
+		});
+		cmbNombre.setBounds(207, 12, 264, 19);
+		getContentPane().add(cmbNombre);
+
+		cmbAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Actividad a=control.getAct().get(cmbAct.getSelectedItem().toString());
+				txtActDesc.setText(a.getDescripcion());
+				txtIns.setText(a.getInstitucion().getNombre());
+				txtCosto.setText(Integer.toString(a.getCosto()));
+				Cuponera cpn=control.getCpn().get(cmbNombre.getSelectedItem().toString());
+				Iterator<Clases_contenidas> ita=cpn.getClsCont().iterator();
+				while((ita.hasNext())&&(ita.next().getAct().getNombre()!=a.getNombre())){}
+				txtCant.setText(Integer.toString(ita.next().getCant()));
+			}
+		});
 
 	}
 }
