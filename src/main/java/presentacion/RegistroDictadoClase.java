@@ -65,7 +65,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public RegistroDictadoClase() {
-		IController control = ICnt;
+		IController control = IC;
 		setResizable(true);
 		setClosable(true);
 		setTitle("Registro Dictado de Clase");
