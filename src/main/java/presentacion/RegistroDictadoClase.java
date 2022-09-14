@@ -81,25 +81,8 @@ public class RegistroDictadoClase extends JInternalFrame {
 		lblInstitucin.setBounds(30, 46, 92, 15);
 		getContentPane().add(lblInstitucin);
 		
-		JComboBox cmbInstituto = new JComboBox();
-		if(control.getIns()!=null) {
-			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
-				cmbInstituto.addItem(hm.getKey());	
-			}
-		}
-		cmbInstituto.setBounds(179, 39, 231, 24);
-		getContentPane().add(cmbInstituto);
-		
 		JComboBox cmbActividad = new JComboBox();
-		if(control.getIns()!=null) {
-			Institucion i=control.getIns().get(cmbInstituto.getSelectedItem().toString());
-			if(i.getActividades()!=null) {
-				Iterator <Actividad> ita= i.getActividades().iterator();
-				while(ita.hasNext()) {
-					cmbActividad.addItem(ita.next().getNombre());
-				}				
-			}			
-		}
+		cmbActividad.addItem(" ");
 		cmbActividad.setBounds(179, 75, 231, 24);
 		getContentPane().add(cmbActividad);
 		
@@ -112,8 +95,8 @@ public class RegistroDictadoClase extends JInternalFrame {
 		lblActividadDeportiva.setBounds(30, 80, 149, 15);
 		getContentPane().add(lblActividadDeportiva);
 		
-		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(30, 107, 70, 15);
+		JLabel lblNombre = new JLabel("Nombre de Clase:");
+		lblNombre.setBounds(30, 113, 131, 15);
 		getContentPane().add(lblNombre);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha inicio:");
@@ -184,56 +167,102 @@ public class RegistroDictadoClase extends JInternalFrame {
 		getContentPane().add(cmbSocio);
 		
 		JComboBox cmbNombre = new JComboBox();
-		if(control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases()!=null) {
-			Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
-			for(Map.Entry<String, Clase> hm:a.getClases().entrySet()) {
-				cmbNombre.addItem(hm.getKey());	
-			}
-		}
-		cmbNombre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
-				txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict().getFecha());
-				txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict().getHora());
-				txtProfesor.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getProf().getNick());
-				txtMin.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmin()));
-				txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRax()));
-				txtUrl.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getUrl());
-				
-			}
-		});
+		cmbNombre.addItem(" ");
 		cmbNombre.setBounds(179, 111, 231, 19);
 		getContentPane().add(cmbNombre);
 		
+		JComboBox cmbInstituto = new JComboBox();
+		cmbInstituto.addItem(" ");
+		if(control.getIns()!=null) {
+			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
+				cmbInstituto.addItem(hm.getKey());	
+			}
+		}
+		cmbInstituto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cmbInstituto.getSelectedItem()!=" ") {
+					Institucion i=control.getIns().get(cmbInstituto.getSelectedItem().toString());
+					if(cmbActividad.getItemCount()>1) {
+						cmbActividad.removeAllItems();
+						cmbActividad.addItem(" ");
+					}
+					Iterator<Actividad> ita=i.getActividades().iterator();
+					while(ita.hasNext()) {
+						cmbActividad.addItem(ita.next().getNombre());
+					}
+				}
+			}
+		});
+		cmbInstituto.setBounds(179, 39, 231, 24);
+		getContentPane().add(cmbInstituto);
+		
+		cmbActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cmbActividad.getSelectedItem()!=" ") {
+					if(cmbNombre.getItemCount()>1) {
+						cmbNombre.removeAllItems();
+						cmbNombre.addItem(" ");
+					}
+					Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
+					for(Map.Entry<String, Clase> hm:a.getClases().entrySet()) {
+						cmbNombre.addItem(hm.getKey());	
+					}
+				}
+			}
+		});
+		
+		cmbNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cmbNombre.getSelectedItem()!=" ") {
+					Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
+					txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict());
+					txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict());
+					txtProfesor.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getProf().getNick());
+					txtMin.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmin()));
+					txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmax()));
+					txtUrl.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getUrl());	
+				}else {
+					txtFecha.setText(" ");
+					txtHora.setText(" ");
+					txtProfesor.setText(" ");
+					txtMin.setText(" ");
+					txtMax.setText(" ");
+					txtUrl.setText(" ");
+				}
+			}
+		});
+		//
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(control.getUsr()!=null) {
 					if(cmbSocio.getItemCount()>0) {
-						Clase c=control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases().get(cmbNombre.getSelectedItem().toString());
-						if(c.getRegis()==c.getRax()) {
-							JFrame f=new JFrame();
-							JOptionPane.showMessageDialog(f, "Los cupos de esa Clase ya se llenaron, por favor seleccione otra.", "Error", JOptionPane.ERROR_MESSAGE);
-						}else {
-							Socio s=(Socio) control.getUsr().get(cmbSocio.getSelectedItem().toString());
-							if(s.getClases()!=null) {
-								Iterator<Fecha_Registro> itfr=s.getClases().iterator();
-								boolean registrado=false;
-								while((itfr.hasNext())&&(!registrado)) {
-									if(itfr.next().getClase().getNombre()==c.getNombre()) {
-										registrado=true;
+						if((cmbInstituto.getSelectedItem()!=" ")&&(cmbActividad.getSelectedItem()!=" ")&&(cmbNombre.getSelectedItem()!=" ")) {
+							Clase c=control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases().get(cmbNombre.getSelectedItem().toString());
+							if(c.getRegis()==c.getRax()) {
+								JFrame f=new JFrame();
+								JOptionPane.showMessageDialog(f, "Los cupos de esa Clase ya se llenaron, por favor seleccione otra.", "Error", JOptionPane.ERROR_MESSAGE);
+							}else {
+								Socio s=(Socio) control.getUsr().get(cmbSocio.getSelectedItem().toString());
+								if(s.getClases()!=null) {
+									Iterator<Fecha_Registro> itfr=s.getClases().iterator();
+									boolean registrado=false;
+									while((itfr.hasNext())&&(!registrado)) {
+										if(itfr.next().getClase().getNombre()==c.getNombre()) {
+											registrado=true;
+										}
 									}
-								}
-								if(registrado) {
-									JFrame f=new JFrame();
-									JOptionPane.showMessageDialog(f, "Ese Socio ya esta registrado a esta Clase, por favor seleccione otro.", "Error", JOptionPane.ERROR_MESSAGE);
+									if(registrado) {
+										JFrame f=new JFrame();
+										JOptionPane.showMessageDialog(f, "Ese Socio ya esta registrado a esta Clase, por favor seleccione otro.", "Error", JOptionPane.ERROR_MESSAGE);
+									}else {
+										s.registrarse(c);
+										c.agregarRegistrado();
+									}
 								}else {
 									s.registrarse(c);
 									c.agregarRegistrado();
 								}
-							}else {
-								s.registrarse(c);
-								c.agregarRegistrado();
 							}
 						}
 					}
