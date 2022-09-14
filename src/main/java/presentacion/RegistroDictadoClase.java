@@ -52,7 +52,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroDictadoClase frame = new RegistroDictadoClase(IC);
+					RegistroDictadoClase frame = new RegistroDictadoClase();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +64,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroDictadoClase(IController ICnt) {
+	public RegistroDictadoClase() {
 		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
