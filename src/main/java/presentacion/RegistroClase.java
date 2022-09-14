@@ -80,25 +80,8 @@ public class RegistroClase extends JInternalFrame {
 		lblInstitucin.setBounds(30, 46, 92, 15);
 		getContentPane().add(lblInstitucin);
 		
-		JComboBox cbInstituto = new JComboBox();
-		if(control.getIns()!=null) {
-			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
-				cbInstituto.addItem(hm.getKey());	
-			}
-		}
-		cbInstituto.setBounds(179, 39, 231, 24);
-		getContentPane().add(cbInstituto);
-		
 		JComboBox cbActividadDeportiva = new JComboBox();
-		if(control.getIns()!=null) {
-			Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
-			if(i.getActividades()!=null) {
-				Iterator <Actividad> ita= i.getActividades().iterator();
-				while(ita.hasNext()) {
-					cbActividadDeportiva.addItem(ita.next().getNombre());
-				}				
-			}			
-		}
+		cbActividadDeportiva.addItem(" ");
 		cbActividadDeportiva.setBounds(179, 75, 231, 24);
 		getContentPane().add(cbActividadDeportiva);
 		
@@ -141,15 +124,7 @@ public class RegistroClase extends JInternalFrame {
 		getContentPane().add(lblUrl);
 		
 		JComboBox cbProfesor = new JComboBox();
-		if(control.getIns()!=null) {
-			Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
-			if(i.getProfesores()!=null) {
-				Iterator<Profesor> itp= i.getProfesores().iterator();
-				while(itp.hasNext()) {
-					cbProfesor.addItem(itp.next().getNombre());	
-				}
-			}	
-		}
+		cbProfesor.addItem(" ");
 		cbProfesor.setBounds(179, 195, 231, 24);
 		getContentPane().add(cbProfesor);
 		
@@ -176,6 +151,42 @@ public class RegistroClase extends JInternalFrame {
 		txtHora.setBounds(179, 166, 231, 19);
 		getContentPane().add(txtHora);
 		
+		JComboBox cbInstituto = new JComboBox();
+		if(control.getIns()!=null) {
+			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
+				cbInstituto.addItem(hm.getKey());	
+			}
+		}
+		cbInstituto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbInstituto.getSelectedItem()!=" ") {
+					Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
+					if(i.getProfesores()!=null) {
+						if(cbProfesor.getItemCount()>1) {
+							cbProfesor.removeAllItems();
+							cbProfesor.addItem(" ");
+						}
+						Iterator<Profesor> itp=i.getProfesores().iterator();
+						while(itp.hasNext()) {
+							cbProfesor.addItem(itp.next().getNombre());	
+						}
+					}
+					if(i.getActividades()!=null) {
+						if(cbActividadDeportiva.getItemCount()>1) {
+							cbActividadDeportiva.removeAllItems();
+							cbActividadDeportiva.addItem(" ");
+						}
+						Iterator<Actividad> ita=i.getActividades().iterator();
+						while(ita.hasNext()) {
+							cbActividadDeportiva.addItem(ita.next().getNombre());
+						}
+					}
+				}
+			}
+		});
+		cbInstituto.setBounds(179, 39, 231, 24);
+		getContentPane().add(cbInstituto);
+		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,12 +197,14 @@ public class RegistroClase extends JInternalFrame {
 								JFrame f=new JFrame();
 								JOptionPane.showMessageDialog(f, "Ese Nombre ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								Fecha f1=new Fecha(LocalDate.now());
-								Fecha f2=new Fecha((LocalDate) ((JFormattedTextField) txtFecha).getValue());
-								Actividad a=control.getAct().get(cbActividadDeportiva.getSelectedItem().toString());
-								Profesor p=(Profesor) control.getUsr().get(cbProfesor.getSelectedItem().toString());
-								Hora h= new Hora((LocalTime) ((JFormattedTextField) txtHora).getValue());
-								Clase c=new Clase(txtNombre.getText(),txtUrl.getText(),Integer.parseInt(txtMin.getText()),Integer.parseInt(txtMax.getText()),f1,f2,a,p,h);
+								if((cbInstituto.getSelectedItem()!=" ")&&(cbActividadDeportiva.getSelectedItem()!=" ")&&(cbProfesor.getSelectedItem()!=" ")) {
+									LocalDate f1=new LocalDate(LocalDate.now());
+									LocalDate f2=new LocalDate((LocalDate) ((JFormattedTextField) txtFecha).getValue());
+									Actividad a=control.getAct().get(cbActividadDeportiva.getSelectedItem().toString());
+									Profesor p=(Profesor) control.getUsr().get(cbProfesor.getSelectedItem().toString());
+									LocalTime h= new LocalTime((LocalTime) ((JFormattedTextField) txtHora).getValue());
+									Clase c=new Clase(txtNombre.getText(),txtUrl.getText(),Integer.parseInt(txtMin.getText()),Integer.parseInt(txtMax.getText()),f1,f2,a,p,h);
+								}
 							}
 						}
 					}
