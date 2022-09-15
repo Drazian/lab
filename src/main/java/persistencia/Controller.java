@@ -12,10 +12,10 @@ public class Controller implements IController {
 	private HashMap<String, Institucion> ins;
 	
 	public Controller() {
-		ins=null;
-		act=null;
-		cpn=null;
-		usr=null;
+		ins=new HashMap<String, Institucion>();
+		act=new HashMap<String, Actividad>();
+		cpn=new HashMap<String, Cuponera>();
+		usr=new HashMap<String, Usuario>();
 		
 	}
 	
