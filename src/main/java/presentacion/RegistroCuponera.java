@@ -1,4 +1,4 @@
-package presentacion;
+package laboratorio;
 
 import java.awt.EventQueue;
 

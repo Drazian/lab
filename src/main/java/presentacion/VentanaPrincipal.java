@@ -1,4 +1,4 @@
-package presentacion;
+package laboratorio;
 
 import java.awt.EventQueue;
 
@@ -12,6 +12,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.SwingConstants;
+
+import Logica.IController;
+import Logica.Fabrica;
+
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
 import java.awt.Color;
@@ -24,6 +28,7 @@ import java.awt.Window.Type;
 public class VentanaPrincipal {
 
 	private JFrame frmVentanaPrincipal;
+    private IController cont;
 
 	/**
 	 * Launch the application.
@@ -45,13 +50,16 @@ public class VentanaPrincipal {
 	 * Create the application.
 	 */
 	public VentanaPrincipal() {
-		initialize();
+		Fabrica fabrica = Fabrica.getInstance();
+        cont = fabrica.getIController();
+		initialize(cont);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(IController cont) {
+		IController ICU=cont;
 		frmVentanaPrincipal = new JFrame();
 		frmVentanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmVentanaPrincipal.setAlwaysOnTop(true);
@@ -69,7 +77,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmRegistroCliente = new JMenuItem("Registro usuario");
 		mntmRegistroCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegistroUsuario aux= new RegistroUsuario();
+				RegistroUsuario aux= new RegistroUsuario(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();
 			}
@@ -80,7 +88,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmRegistroActividadDeportiva = new JMenuItem("Registro actividad deportiva");
 		mntmRegistroActividadDeportiva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegistroActividadDeportiva aux= new RegistroActividadDeportiva();
+				RegistroActividadDeportiva aux= new RegistroActividadDeportiva(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();
 			}
@@ -90,7 +98,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmRegistroDictadoDe = new JMenuItem("Registro dictado de clase");
 		mntmRegistroDictadoDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RegistroDictadoClase aux= new RegistroDictadoClase();
+				RegistroDictadoClase aux= new RegistroDictadoClase(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();				
 			}
@@ -126,6 +134,16 @@ public class VentanaPrincipal {
 			}
 		});
 		mnRegistro.add(mntmAgregarACuponera);
+		
+		JMenuItem mntmAgregarInstitucion = new JMenuItem("Agregar Institucion");
+		mntmAgregarInstitucion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AgregarInstitucion aux= new AgregarInstitucion(ICU); 
+				frmVentanaPrincipal.getContentPane().add(aux);
+				aux.setVisible(true);
+			}
+		});
+		mnRegistro.add(mntmAgregarInstitucion);
 		
 		JMenu mnConsultas = new JMenu("Consultas");
 		menuBar.add(mnConsultas);
@@ -164,7 +182,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmConsultaCuponera = new JMenuItem("Consulta cuponera");
 		mntmConsultaCuponera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConsultaCuponera aux= new ConsultaCuponera();
+				ConsultaCuponera aux= new ConsultaCuponera(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();	
 			}

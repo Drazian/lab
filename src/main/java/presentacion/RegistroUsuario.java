@@ -1,6 +1,6 @@
-package presentacion;
+package laboratorio;
 
-import java.awt.EventQueue;    
+import java.awt.EventQueue;      
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -9,11 +9,11 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import persistencia.IController;
-import persistencia.Fabrica;
-import persistencia.Fecha;
-import persistencia.Institucion;
-import persistencia.Usuario;
+import Logica.IController;
+import Logica.Fabrica;
+import Logica.Fecha;
+import Logica.Institucion;
+import Logica.Usuario;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
@@ -36,6 +37,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
+import java.io.File;
 
 public class RegistroUsuario extends JInternalFrame {
 	private JTextField txtNombre;
@@ -43,12 +45,12 @@ public class RegistroUsuario extends JInternalFrame {
 	private JTextField txtNickname;
 	private JTextField txtCorreo;
     
-    private static Fabrica fab= Fabrica.getInstance();
-	private static IController IC=fab.getIController();
+	private static IController control;
     private JTextField txtDesc;
     private JTextField txtBio;
     private JFormattedTextField txtFecha;
     private JTextField txtUrl;
+    private JTextField txtFile;
 
 	/**
 	 * Launch the application.
@@ -57,7 +59,7 @@ public class RegistroUsuario extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroUsuario frame = new RegistroUsuario(IC);
+					RegistroUsuario frame = new RegistroUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -241,7 +243,7 @@ public class RegistroUsuario extends JInternalFrame {
 		});
 		btnAceptar_1.setBounds(58, 377, 117, 25);
 		getContentPane().add(btnAceptar_1);
-		btnCancelar_1.setBounds(240, 377, 117, 25);
+		btnCancelar_1.setBounds(244, 377, 117, 25);
 		getContentPane().add(btnCancelar_1);
 
 	}

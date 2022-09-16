@@ -1,12 +1,12 @@
-package presentacion;
+package laboratorio;
 
 import java.awt.EventQueue; 
 
-import persistencia.IController;
-import persistencia.Cuponera;
-import persistencia.Institucion;
-import persistencia.Actividad;
-import persistencia.Clases_contenidas;
+import Logica.IController;
+import Logica.Cuponera;
+import Logica.Institucion;
+import Logica.Actividad;
+import Logica.Clases_contenidas;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -34,7 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ConsultaCuponera extends JInternalFrame {
-	private IController ICnt;
+	private IController control;
 	private JComboBox cmbNombre;
 	private JTextField txtCpnDesc;
 	private JTextField txtActDesc;
@@ -49,7 +49,7 @@ public class ConsultaCuponera extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ConsultaCuponera frame = new ConsultaCuponera();
+					ConsultaCuponera frame = new ConsultaCuponera(control);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,8 +61,8 @@ public class ConsultaCuponera extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaCuponera() {
-		IController control = ICnt;
+	public ConsultaCuponera(IController ICnt) {
+		control = ICnt;
 		setResizable(true);
 		setClosable(true);
 		setTitle("Consultar Cuponera");
@@ -211,3 +211,37 @@ public class ConsultaCuponera extends JInternalFrame {
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

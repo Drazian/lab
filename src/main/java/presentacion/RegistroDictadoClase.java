@@ -1,4 +1,4 @@
-package presentacion;
+package laboratorio;
 
 import java.awt.EventQueue; 
 
@@ -9,16 +9,16 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import presentacion.IController;
-import presentacion.Actividad;
-import presentacion.Clase;
-import presentacion.Fabrica;
-import presentacion.Fecha;
-import presentacion.Institucion;
-import presentacion.Usuario;
-import presentacion.Profesor;
-import presentacion.Socio;
-import presentacion.Fecha_Registro;
+import Logica.IController;
+import Logica.Actividad;
+import Logica.Clase;
+import Logica.Fabrica;
+import Logica.Fecha;
+import Logica.Institucion;
+import Logica.Usuario;
+import Logica.Profesor;
+import Logica.Socio;
+import Logica.Fecha_Registro;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -41,8 +41,7 @@ import javax.swing.JFormattedTextField;
 
 public class RegistroDictadoClase extends JInternalFrame {
     
-    private static Fabrica fab= Fabrica.getInstance();
-	private static IController IC=fab.getIController();
+	private static IController control;
 	private JTextField txtUrl;
 
 	/**
@@ -64,8 +63,8 @@ public class RegistroDictadoClase extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroDictadoClase() {
-		IController control = IC;
+	public RegistroDictadoClase(IController ICnt) {
+		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);
 		setTitle("Registro Dictado de Clase");
@@ -215,11 +214,11 @@ public class RegistroDictadoClase extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(cmbNombre.getSelectedItem()!=" ") {
 					Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
-					txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict());
-					txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict());
+					txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict().getFecha());
+					txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict().getHora());
 					txtProfesor.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getProf().getNick());
 					txtMin.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmin()));
-					txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmax()));
+					txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRax()));
 					txtUrl.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getUrl());	
 				}else {
 					txtFecha.setText(" ");
@@ -275,7 +274,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                		setVisible(false);
+                setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(240, 383, 117, 25);

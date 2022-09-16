@@ -1,6 +1,6 @@
-package presentacion;
+package laboratorio;
 
-import java.awt.EventQueue;   
+import java.awt.EventQueue;    
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -9,13 +9,14 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import persistencia.IController;
-import persistencia.Institucion;
-import persistencia.Actividad;
-import persistencia.Profesor;
-import persistencia.Clase;
-import persistencia.Fecha;
-import persistencia.Hora;
+import Logica.IController;
+import Logica.Institucion;
+import Logica.Actividad;
+import Logica.Profesor;
+import Logica.Clase;
+import Logica.Fabrica;
+import Logica.Fecha;
+import Logica.Hora;
 
 import java.awt.GridLayout;
 import java.time.LocalDate;
@@ -39,10 +40,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class RegistroClase extends JInternalFrame {
-	private IController ICnt;
+	private IController control;
 	private JTextField txtNombre;
 	private JTextField txtUrl;
-	private JTextField txtFecha;
+	private JTextField txtFecha;    
 
 	/**
 	 * Launch the application.
@@ -63,12 +64,12 @@ public class RegistroClase extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroClase() {
-		IController control = ICnt;
+	public RegistroClase(IController ICnt) {
+		control = ICnt;
 		setResizable(true);
 		setClosable(true);
-		setTitle("Registro de Clase");
-		setBounds(100, 100, 450, 384);
+		setTitle("Registro Dictado de Clase");
+		setBounds(100, 100, 450, 383);
 		getContentPane().setLayout(null);
 		
 		JLabel lblIngreseLosSiguientes = new JLabel("Ingrese los siguientes datos:");
@@ -159,27 +160,17 @@ public class RegistroClase extends JInternalFrame {
 		}
 		cbInstituto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cbInstituto.getSelectedItem()!=" ") {
-					Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
-					if(i.getProfesores()!=null) {
-						if(cbProfesor.getItemCount()>1) {
-							cbProfesor.removeAllItems();
-							cbProfesor.addItem(" ");
-						}
-						Iterator<Profesor> itp=i.getProfesores().iterator();
-						while(itp.hasNext()) {
-							cbProfesor.addItem(itp.next().getNombre());	
-						}
+				Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
+				if(i.getProfesores()!=null) {
+					Iterator<Profesor> itp=i.getProfesores().iterator();
+					while(itp.hasNext()) {
+						cbProfesor.addItem(itp.next().getNombre());	
 					}
-					if(i.getActividades()!=null) {
-						if(cbActividadDeportiva.getItemCount()>1) {
-							cbActividadDeportiva.removeAllItems();
-							cbActividadDeportiva.addItem(" ");
-						}
-						Iterator<Actividad> ita=i.getActividades().iterator();
-						while(ita.hasNext()) {
-							cbActividadDeportiva.addItem(ita.next().getNombre());
-						}
+				}
+				if(i.getActividades()!=null) {
+					Iterator<Actividad> ita=i.getActividades().iterator();
+					while(ita.hasNext()) {
+						cbActividadDeportiva.addItem(ita.next().getNombre());
 					}
 				}
 			}
@@ -197,14 +188,12 @@ public class RegistroClase extends JInternalFrame {
 								JFrame f=new JFrame();
 								JOptionPane.showMessageDialog(f, "Ese Nombre ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								if((cbInstituto.getSelectedItem()!=" ")&&(cbActividadDeportiva.getSelectedItem()!=" ")&&(cbProfesor.getSelectedItem()!=" ")) {
-									LocalDate f1=new LocalDate(LocalDate.now());
-									LocalDate f2=new LocalDate((LocalDate) ((JFormattedTextField) txtFecha).getValue());
-									Actividad a=control.getAct().get(cbActividadDeportiva.getSelectedItem().toString());
-									Profesor p=(Profesor) control.getUsr().get(cbProfesor.getSelectedItem().toString());
-									LocalTime h= new LocalTime((LocalTime) ((JFormattedTextField) txtHora).getValue());
-									Clase c=new Clase(txtNombre.getText(),txtUrl.getText(),Integer.parseInt(txtMin.getText()),Integer.parseInt(txtMax.getText()),f1,f2,a,p,h);
-								}
+								Fecha f1=new Fecha(LocalDate.now());
+								Fecha f2=new Fecha((LocalDate) ((JFormattedTextField) txtFecha).getValue());
+								Actividad a=control.getAct().get(cbActividadDeportiva.getSelectedItem().toString());
+								Profesor p=(Profesor) control.getUsr().get(cbProfesor.getSelectedItem().toString());
+								Hora h= new Hora((LocalTime) ((JFormattedTextField) txtHora).getValue());
+								Clase c=new Clase(txtNombre.getText(),txtUrl.getText(),Integer.parseInt(txtMin.getText()),Integer.parseInt(txtMax.getText()),f1,f2,a,p,h);
 							}
 						}
 					}

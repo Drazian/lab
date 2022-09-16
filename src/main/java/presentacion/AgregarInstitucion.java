@@ -1,12 +1,13 @@
-package presentacion;
+package laboratorio;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import persistencia.Fabrica;
-import persistencia.IController;
+import Logica.Fabrica;
+import Logica.IController;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -16,7 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AgregarInstitucion extends JFrame {
+public class AgregarInstitucion extends JInternalFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNom;
@@ -25,8 +26,7 @@ public class AgregarInstitucion extends JFrame {
     private JButton btnAceptar;
     private JButton btnCancelar;
     
-    private static Fabrica fab= Fabrica.getInstance();
-	private static IController IC=fab.getIController();
+	private static IController control;
 
 	/**
 	 * Launch the application.
@@ -35,7 +35,7 @@ public class AgregarInstitucion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarInstitucion frame = new AgregarInstitucion(IC);
+					AgregarInstitucion frame = new AgregarInstitucion(control);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,9 +47,10 @@ public class AgregarInstitucion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AgregarInstitucion(IController ICnt) {
-		IController control = ICnt;
+	public AgregarInstitucion(IController ICU) {
+		control = ICU;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Agregar Institución");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,11 +90,12 @@ public class AgregarInstitucion extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(ICnt.getIns().containsKey(txtNom.getText())) {
+				if(control.getIns().containsKey(txtNom.getText())) {
 					JFrame f=new JFrame();
 					JOptionPane.showMessageDialog(f, "Ese Nombre ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
-					crearInst(e,ICnt);	
+					control.altaInstitucion(txtNom.getText(),txtDesc.getText(),txtUrl.getText());
+					setVisible(false);
 				}
 			}
 		});
@@ -103,7 +105,6 @@ public class AgregarInstitucion extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpiar();
                 setVisible(false);
 			}
 		});
@@ -112,37 +113,4 @@ public class AgregarInstitucion extends JFrame {
 		
 	}
 	
-	private void crearInst(ActionEvent e,IController ic) {
-		String nom=this.txtNom.getText();
-		String desc=this.txtDesc.getText();
-		String url=this.txtUrl.getText();
-		ic.altaInstitucion(nom, desc, url);
-	}
-	
-	private void limpiar() {
-		txtNom.setText("Nombre");
-		txtDesc.setText("Descripcion");
-		txtUrl.setText("Url");
-	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
