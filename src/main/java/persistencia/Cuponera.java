@@ -1,33 +1,14 @@
-package persistencia;
+package Logica;
 
 import java.util.HashSet;
 
-import java.io.Serializable;
-import java.time.*;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-public class Cuponera implements Serializable{
-        @Id
-	private String nombre;
-        private String descripcion;
-	private int descuento;	
-        private LocalDate fecha_ini, fecha_fin;
-        
-        @OneToMany
+public class Cuponera{
+	private String nombre,descripcion;
+	private int descuento;
+	private Fecha fecha_ini, fecha_fin;
 	private HashSet<Clases_contenidas> cont;
 	
-        public Cuponera(){}
-        
-	public Cuponera(String n, String d, int desc, LocalDate fi, LocalDate ff) {
+	public Cuponera(String n, String d, int desc, Fecha fi, Fecha ff) {
 		this.nombre=n;
 		this.descripcion=d;
 		this.descuento=desc;
@@ -48,11 +29,11 @@ public class Cuponera implements Serializable{
         return descuento;
     }
     
-    public LocalDate getFecha_ini() {
+    public Fecha getFecha_ini() {
     	return fecha_ini;
     }
     
-    public LocalDate getFecha_fin() {
+    public Fecha getFecha_fin() {
     	return fecha_fin;
     }
     
@@ -72,11 +53,11 @@ public class Cuponera implements Serializable{
     	descuento = ap;
     }
     
-    public void setFecha_ini(LocalDate f) {
+    public void setFecha_ini(Fecha f) {
     	fecha_ini = f;
     }
     
-    public void setFecha_fin(LocalDate f) {
+    public void setFecha_fin(Fecha f) {
     	fecha_fin = f;
     }
     

@@ -1,29 +1,16 @@
-package persistencia;
+package Logica;
 
 import java.util.HashSet;
+import java.time.LocalDate;
 
-import java.io.Serializable;
-import java.time.*;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-public class Socio extends Usuario implements Serializable{
-	private HashSet<LocalDate> cupon;
-	private HashSet<LocalDate> anotado;
+public class Socio extends Usuario{
+	private HashSet<Fecha_Compra> cupon;
+	private HashSet<Fecha_Registro> anotado;
 	
-        public Socio(){}
-        
-	public Socio(String ni, String n, String ap, String ma, LocalDate f, LocalDate fc, String foto) {
-		super(ni, n, ap, ma, f, fc, foto);
-		this.cupon = new HashSet<LocalDate>();
-		this.anotado = new HashSet<LocalDate>();
+	public Socio(String ni, String n, String ap, String ma, Fecha f,String foto) {
+		super(ni, n, ap, ma, f, foto);
+		this.cupon = new HashSet<Fecha_Compra>();
+		this.anotado = new HashSet<Fecha_Registro>();
 	}
 	
 	public HashSet<Fecha_Registro> getClases(){

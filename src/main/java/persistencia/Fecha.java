@@ -1,12 +1,12 @@
-package persistencia;
+package Logica;
 
 import java.time.LocalDate;  // Importa la clase para la fecha
 
 public class Fecha {
 	private LocalDate fechita;
 	
-	public Fecha() {
-		this.fechita = LocalDate.now();
+	public Fecha(LocalDate ld) {
+		this.fechita = ld;
 	}
 	public LocalDate getFecha() {
 		return fechita;

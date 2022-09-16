@@ -1,43 +1,18 @@
-package persistencia;
+package Logica;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.time.*;
+import java.io.Serializable; 
 
-@Entity
-public class Usuario implements Serializable{
-        @Id
-	private String nickname;
-        private String nombre,apellido,mail,foto;
-	private LocalDate fechanac;
-        private LocalDate fechaCreado;
+public class Usuario implements Serializable {
+	protected String nickname,nombre,apellido,mail,foto;
+	protected Fecha fechanac;
 	
-        public Usuario(){}
-        
-	public Usuario(String ni, String n, String ap, String ma, LocalDate f, LocalDate fechaC, String fot) {
+	public Usuario(String ni, String n, String ap, String ma, Fecha f,String fot) {
         this.nickname = ni;
-	this.nombre = n;
+        this.nombre = n;
         this.apellido = ap;
         this.mail = ma;
         this.fechanac = f;
-        this.fechaCreado=fechaC;
-	this.foto=fot;
-    }
-        
-        public Usuario(String ni, String n, String ap, String ma, LocalDate f) {
-        this.nickname = ni;
-		this.nombre = n;
-        this.apellido = ap;
-        this.mail = ma;
-        this.fechanac = f;
-        //this.fechaCreado=fechaC;
+        this.foto=fot;
     }
 
     public String getNick() {
@@ -56,8 +31,12 @@ public class Usuario implements Serializable{
         return mail;
     }
 
-    public LocalDate getFechanac() {
+    public Fecha getFechanac() {
         return fechanac;
+    }
+    
+    public String getFoto() {
+    	return foto;
     }
     
     public void setNick(String n) {
@@ -76,32 +55,12 @@ public class Usuario implements Serializable{
         mail = ap;
     }
 
-    public void setFechanac(LocalDate ap) {
+    public void setFechanac(Fecha ap) {
         fechanac = ap;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public LocalDate getFechaCreado() {
-        return fechaCreado;
-    }
-
-    public void setFechaCreado(LocalDate fechaCreado) {
-        this.fechaCreado = fechaCreado;
-    }
-    
-    public String getFoto() {
-    	return foto;
     }
 
     public void setFoto(String ap) {
         foto = ap;
     }
-    
+	
 }

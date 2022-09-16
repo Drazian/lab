@@ -1,4 +1,4 @@
-package persistencia;
+package Logica;
 
 public class Fecha_Compra  {
 	private Socio sc;

@@ -1,39 +1,15 @@
-package persistencia;
+package Logica;
 
-import persistencia.Actividad;
-import persistencia.Actividad;
-
-import java.io.Serializable;
-import java.time.*;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-public class Clase implements Serializable{
-        @Id
-	private String nombre;
-        private String url;
+public class Clase{
+	private String nombre,url;
 	private int regitrados_min,regitrados_max,cantRegistrados;
-	private LocalDate fecha_reg, fecha_dict;
-	private LocalTime hora_dict;
-        
-        @OneToOne
+	private Fecha fecha_reg, fecha_dict;
+	private Hora hora_dict;
 	private Actividad act;
-        
-	@OneToOne
-        private Profesor prof;
+	private Profesor prof;
 	
-        public Clase(){}
 	
-	public Clase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Actividad a, Profesor p, LocalTime h) {
+	public Clase(String n, String u, int rmin, int rmax, Fecha fr, Fecha fd, Actividad a, Profesor p, Hora h) {
 		this.nombre = n;
 		this.url = u;
 		this.regitrados_min = rmin;
@@ -70,15 +46,15 @@ public class Clase implements Serializable{
         return regitrados_max;
     }
     
-    public LocalDate getFecha_reg() {
+    public Fecha getFecha_reg() {
     	return fecha_reg;
     }
     
-    public LocalDate getFecha_dict() {
+    public Fecha getFecha_dict() {
     	return fecha_dict;
     }
     
-    public LocalTime getHora_dict() {
+    public Hora getHora_dict() {
     	return hora_dict;
     }
     
@@ -106,11 +82,11 @@ public class Clase implements Serializable{
     	regitrados_max = ap;
     }
     
-    public void setFecha_reg(LocalDate f) {
+    public void setFecha_reg(Fecha f) {
     	fecha_reg = f;
     }
     
-    public void setFecha_dict(LocalDate f) {
+    public void setFecha_dict(Fecha f) {
     	fecha_dict = f;
     }
     
@@ -118,7 +94,7 @@ public class Clase implements Serializable{
     	prof = f;
     }
     
-    public void setHora_dict(LocalTime h) {
+    public void setHora_dict(Hora h) {
     	hora_dict = h;
     }
     

@@ -1,8 +1,6 @@
-package persistencia;
+package Logica;
 
-import persistencia.Actividad;
 import java.util.HashMap;
-import persistencia.Actividad;
 
 
 public class Controller implements IController {
@@ -65,3 +63,32 @@ public class Controller implements IController {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

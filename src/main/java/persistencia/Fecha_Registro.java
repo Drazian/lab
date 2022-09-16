@@ -1,11 +1,11 @@
-package persistencia;
+package Logica;
 
-import java.time.*;
+import java.time.LocalDate;
 
 public class Fecha_Registro {
 	private Socio sc;
 	private Clase cls;
-	private Fecha fch;
+	private LocalDate fch;
 	
 	public Fecha_Registro(Socio s, Clase c, LocalDate f) {
 		this.sc=s;

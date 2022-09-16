@@ -1,33 +1,9 @@
-package persistencia;
+package Logica;
 
-import persistencia.Actividad;
-import persistencia.Actividad;
-
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-public class Clases_contenidas implements Serializable{
-        @Id	
-        @ManyToOne
-        private Cuponera cupon;
-	
-        @Id
-        @ManyToOne
-        private Actividad act;
-        
+public class Clases_contenidas {
+	private Cuponera cupon;
+	private Actividad act;
 	private int cantidad;
-        
-        public Clases_contenidas(){}
 	
 	public Clases_contenidas(Cuponera cpn, Actividad a, int cant) {
 		this.cupon=cpn;
