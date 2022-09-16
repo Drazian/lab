@@ -1,4 +1,4 @@
-package persistencia;
+package Logica;
 
 public class Fabrica {
 
@@ -13,9 +13,9 @@ public class Fabrica {
         }
         return instancia;
     }
-    
-    public IController getIcontroller() {
-    	return new Controller();
+
+    public IController getIController() {
+        return new Controller();
     }
 
 }

@@ -1,5 +1,6 @@
-package persistencia;
+package Logica;
 
+import java.util.HashMap;
 
 public interface IController {
 	public abstract HashMap<String, Usuario> getUsr();

@@ -1,38 +1,18 @@
-package persistencia;
+package Logica;
 
 import java.util.HashSet;
 import java.util.HashMap; 
 
-import java.io.Serializable;
-import java.time.*;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@Entity
-public class Actividad implements Serializable{
-        @Id
-	private String nombre;
-        private String descripcion;
-       	private int costo, duracion;
-	private LocalDate fecha_reg;
+public class Actividad{
+	private String nombre,descripcion;
+	private int costo, duracion;
+	private Fecha fecha_reg;
 	private Institucion ins;
-        
-        @ManyToMany
 	private HashSet<Clases_contenidas> asociadas;
-	
-        @ManyToOne
-        private HashMap<String, Clase> cls;
+	private HashMap<String, Clase> cls;
 	
 	
-	public Actividad(String n, String d, int c, int dur, LocalDate f, Institucion i) {
+	public Actividad(String n, String d, int c, int dur, Fecha f, Institucion i) {
 		this.costo = c;
 		this.duracion = dur;
 		this.descripcion = d;
@@ -59,12 +39,16 @@ public class Actividad implements Serializable{
         return duracion;
     }
     
-    public LocalDate getFecha_reg() {
+    public Fecha getFecha_reg() {
     	return fecha_reg;
     }
     
     public Institucion getInstitucion() {
     	return ins;
+    }
+    
+    public HashMap<String, Clase> getClases(){
+    	return cls;
     }
     
     public void setNombre(String n) {
@@ -79,7 +63,7 @@ public class Actividad implements Serializable{
     	costo = ap;
     }
     
-    public void setFecha_reg(LocalDate f) {
+    public void setFecha_reg(Fecha f) {
     	fecha_reg = f;
     }
     
@@ -89,5 +73,11 @@ public class Actividad implements Serializable{
     
     public void setInstitucion(Institucion i) {
     	ins = i;
+    }
+    
+    public void altaClase(String n, String u, int rmin, int rmax, Fecha fr, Fecha fd, Profesor p, Hora h) {
+    	Clase c=new Clase(n,u,rmin,rmax,fr,fd,this,p,h);
+    	cls.put(n, c);
+    	p.addClases(c);
     }
 }
