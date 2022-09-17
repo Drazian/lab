@@ -1,11 +1,14 @@
 package presentacion;
 
-import java.awt.EventQueue;
+import java.awt.EventQueue; 
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+
+import persistencia.*;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -16,28 +19,39 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Calendar;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Rectangle;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JToggleButton;
 
 public class ConsultaUsuario extends JInternalFrame {
+	private IController control;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
-	private JTextField txtNickname;
-	private JTextField txtCorreo;
-	private JTextField txtSitioWeb;
-	private JTextField txtDescripcion;
-	private JTextField txtBiografia;
-	private JTable tbUsuario;
-	private JTable tbClases;
-	private JTable tbActividadDeportiva;
+	private JTextField txtMail;
+	private JTextField txtWeb;
+	private JTextField txtDesc;
+	private JTextField txtBio;
+	private JTextField txtActividad;
+	private JTextField txtDur;
+	private JTextField txtProf;
+	private JTextField txtUrl;
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,152 +68,334 @@ public class ConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario() {
+	public ConsultaUsuario(IController ICnt) {
+		control=ICnt;
 		setResizable(true);
 		setNormalBounds(new Rectangle(100, 100, 450, 500));
 		setClosable(true);
 		setTitle("Modificar usuario");
-		setBounds(100, 100, 450, 966);
+		setBounds(100, 100, 775, 520);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(30, 228, 70, 15);
+		lblNombre.setBounds(30, 102, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		txtNombre = new JTextField();
+		txtNombre.setEditable(false);
 		txtNombre.setText("Nombre");
-		txtNombre.setBounds(179, 226, 231, 19);
+		txtNombre.setBounds(179, 100, 231, 19);
 		getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(30, 257, 70, 15);
+		lblApellido.setBounds(30, 129, 70, 15);
 		getContentPane().add(lblApellido);
 		
-		JLabel lblNickname = new JLabel("Nickname:");
-		lblNickname.setBounds(30, 288, 84, 15);
-		getContentPane().add(lblNickname);
-		
 		txtApellido = new JTextField();
+		txtApellido.setEditable(false);
 		txtApellido.setText("Apellido");
-		txtApellido.setBounds(179, 255, 231, 19);
+		txtApellido.setBounds(179, 131, 231, 19);
 		getContentPane().add(txtApellido);
 		txtApellido.setColumns(10);
 		
-		txtNickname = new JTextField();
-		txtNickname.setText("Nickname");
-		txtNickname.setBounds(179, 286, 231, 19);
-		getContentPane().add(txtNickname);
-		txtNickname.setColumns(10);
-		
 		JLabel lblCorreo = new JLabel("Correo electrónico: ");
-		lblCorreo.setBounds(30, 317, 145, 15);
+		lblCorreo.setBounds(12, 167, 145, 15);
 		getContentPane().add(lblCorreo);
 		
-		txtCorreo = new JTextField();
-		txtCorreo.setText("Correo");
-		txtCorreo.setBounds(179, 315, 231, 19);
-		getContentPane().add(txtCorreo);
-		txtCorreo.setColumns(10);
+		txtMail = new JTextField();
+		txtMail.setEditable(false);
+		txtMail.setText("Correo");
+		txtMail.setBounds(179, 165, 231, 19);
+		getContentPane().add(txtMail);
+		txtMail.setColumns(10);
 		
 		JLabel lblFechaDeNacimiento = new JLabel("Fecha de nacimiento: ");
-		lblFechaDeNacimiento.setBounds(30, 344, 155, 15);
+		lblFechaDeNacimiento.setBounds(12, 194, 155, 15);
 		getContentPane().add(lblFechaDeNacimiento);
 		
-		JButton btnSeleccionarImagen = new JButton("Seleccionar Imagen");
-		btnSeleccionarImagen.setBounds(12, 481, 188, 25);
-		getContentPane().add(btnSeleccionarImagen);
-		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(108, 774, 117, 25);
-		getContentPane().add(btnAceptar);
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(248, 774, 117, 25);
-		getContentPane().add(btnCancelar);
-		
-		JSpinner spDia = new JSpinner();
-		spDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
-		spDia.setBounds(203, 342, 52, 20);
-		getContentPane().add(spDia);
-		
-		JSpinner spMes = new JSpinner();
-		spMes.setModel(new SpinnerNumberModel(1, 1, 12, 1));
-		spMes.setBounds(275, 342, 52, 20);
-		getContentPane().add(spMes);
-		
-		JSpinner spAnio = new JSpinner();
-		spAnio.setModel(new SpinnerNumberModel(new Integer(2022), new Integer(1900), null, new Integer(1)));
-		spAnio.setBounds(339, 342, 71, 20);
-		getContentPane().add(spAnio);
+		JFormattedTextField txtFnac = new JFormattedTextField(LocalDate.now());
+		txtFnac.setEditable(false);
+		txtFnac.setBounds(179, 196, 231, 20);
+		getContentPane().add(txtFnac);
 		
 		JLabel lblInstituto = new JLabel("Instituto: ");
-		lblInstituto.setBounds(30, 371, 70, 15);
+		lblInstituto.setBounds(427, 252, 70, 15);
 		getContentPane().add(lblInstituto);
 		
 		JLabel lblDescripcin = new JLabel("Descripción: ");
-		lblDescripcin.setBounds(30, 398, 101, 15);
+		lblDescripcin.setBounds(427, 279, 101, 15);
 		getContentPane().add(lblDescripcin);
 		
 		JLabel lblBiografa = new JLabel("Biografía: ");
-		lblBiografa.setBounds(30, 425, 84, 15);
+		lblBiografa.setBounds(427, 306, 84, 15);
 		getContentPane().add(lblBiografa);
 		
 		JLabel lblSitioWeb = new JLabel("Sitio web: ");
-		lblSitioWeb.setBounds(30, 452, 84, 15);
+		lblSitioWeb.setBounds(427, 350, 84, 15);
 		getContentPane().add(lblSitioWeb);
 		
-		txtSitioWeb = new JTextField();
-		txtSitioWeb.setText("Sitio web");
-		txtSitioWeb.setBounds(179, 450, 231, 19);
-		getContentPane().add(txtSitioWeb);
-		txtSitioWeb.setColumns(10);
+		txtWeb = new JTextField();
+		txtWeb.setEditable(false);
+		txtWeb.setText("Sitio web");
+		txtWeb.setBounds(515, 348, 231, 19);
+		getContentPane().add(txtWeb);
+		txtWeb.setColumns(10);
 		
-		JComboBox cbInstituto = new JComboBox();
-		cbInstituto.setModel(new DefaultComboBoxModel(new String[] {"Instituto1", "Instituto2", "Instituto3"}));
-		cbInstituto.setBounds(179, 371, 231, 24);
-		getContentPane().add(cbInstituto);
+		JTextField txtInstituto = new JTextField();
+		txtInstituto.setEditable(false);
+		txtInstituto.setText("Instituto");
+		txtInstituto.setBounds(515, 250, 231, 19);
+		getContentPane().add(txtInstituto);
 		
-		txtDescripcion = new JTextField();
-		txtDescripcion.setText("Descripcion");
-		txtDescripcion.setBounds(179, 398, 231, 19);
-		getContentPane().add(txtDescripcion);
-		txtDescripcion.setColumns(10);
+		txtDesc = new JTextField();
+		txtDesc.setEditable(false);
+		txtDesc.setText("Descripcion");
+		txtDesc.setBounds(515, 277, 231, 19);
+		getContentPane().add(txtDesc);
+		txtDesc.setColumns(10);
 		
-		txtBiografia = new JTextField();
-		txtBiografia.setText("Biografia");
-		txtBiografia.setBounds(179, 423, 231, 19);
-		getContentPane().add(txtBiografia);
-		txtBiografia.setColumns(10);
+		txtBio = new JTextField();
+		txtBio.setEditable(false);
+		txtBio.setText("Biografia");
+		txtBio.setBounds(515, 304, 231, 19);
+		getContentPane().add(txtBio);
+		txtBio.setColumns(10);
 		
 		JComboBox cbTipo = new JComboBox();
-		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"Cliente", "Profesor"}));
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {" ", "Cliente", "Profesor"}));
 		cbTipo.setBounds(179, 27, 231, 24);
 		getContentPane().add(cbTipo);
 		
-		JLabel lblTipoDeUsuario = new JLabel("Tipo de Usuario:");
-		lblTipoDeUsuario.setBounds(26, 32, 130, 15);
-		getContentPane().add(lblTipoDeUsuario);
-		
-		tbUsuario = new JTable();
-		tbUsuario.setBounds(12, 63, 416, 153);
-		getContentPane().add(tbUsuario);
+		JLabel lbTipoDeUsr = new JLabel("Tipo de Usuario:");
+		lbTipoDeUsr.setBounds(26, 32, 130, 15);
+		getContentPane().add(lbTipoDeUsr);
 		
 		JLabel lblClases = new JLabel("Clases:");
-		lblClases.setBounds(22, 519, 70, 15);
+		lblClases.setBounds(30, 233, 70, 15);
 		getContentPane().add(lblClases);
 		
-		JLabel lblActividadesDeportivas = new JLabel("Actividades deportivas:");
-		lblActividadesDeportivas.setBounds(12, 676, 173, 15);
-		getContentPane().add(lblActividadesDeportivas);
+		JLabel lblNickname_1 = new JLabel("Nickname:");
+		lblNickname_1.setBounds(30, 70, 101, 15);
+		getContentPane().add(lblNickname_1);
 		
-		tbClases = new JTable();
-		tbClases.setBounds(12, 548, 416, 116);
-		getContentPane().add(tbClases);
+		JComboBox cbNick = new JComboBox();
+		cbNick.addItem(" ");
+		cbNick.setBounds(179, 65, 231, 24);
+		getContentPane().add(cbNick);
 		
-		tbActividadDeportiva = new JTable();
-		tbActividadDeportiva.setBounds(22, 703, 406, 57);
-		getContentPane().add(tbActividadDeportiva);
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnSalir.setBounds(374, 447, 117, 25);
+		getContentPane().add(btnSalir);
+		
+		JComboBox cbClases = new JComboBox();
+		cbClases.addItem(" ");
+		cbClases.setBounds(179, 228, 221, 24);
+		getContentPane().add(cbClases);
+		
+		JLabel lblActividad = new JLabel("Actividad:");
+		lblActividad.setBounds(30, 260, 70, 15);
+		getContentPane().add(lblActividad);
+		
+		txtActividad = new JTextField();
+		txtActividad.setText("Actividad");
+		txtActividad.setEditable(false);
+		txtActividad.setBounds(176, 258, 224, 19);
+		getContentPane().add(txtActividad);
+		txtActividad.setColumns(10);
+		
+		JLabel lblFechaDictado = new JLabel("Fecha Dictado:");
+		lblFechaDictado.setBounds(30, 287, 126, 15);
+		getContentPane().add(lblFechaDictado);
+		
+		JFormattedTextField txtFDict = new JFormattedTextField(LocalDate.now());
+		txtFDict.setEditable(false);
+		txtFDict.setBounds(179, 289, 221, 19);
+		getContentPane().add(txtFDict);
+		
+		JLabel lblDuracin = new JLabel("Duración:");
+		lblDuracin.setBounds(40, 350, 70, 15);
+		getContentPane().add(lblDuracin);
+		
+		txtDur = new JTextField();
+		txtDur.setText("0 min");
+		txtDur.setEditable(false);
+		txtDur.setBounds(179, 348, 70, 19);
+		getContentPane().add(txtDur);
+		txtDur.setColumns(10);
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+		JFormattedTextField txtHDict = new JFormattedTextField(LocalTime.now().format(dtf));
+		txtHDict.setEditable(false);
+		txtHDict.setBounds(179, 320, 221, 19);
+		getContentPane().add(txtHDict);
+		
+		JLabel lblHoradictada = new JLabel("HoraDictada:");
+		lblHoradictada.setBounds(30, 322, 117, 15);
+		getContentPane().add(lblHoradictada);
+		
+		JLabel lblImg = new JLabel("");
+		lblImg.setBounds(444, 32, 245, 184);
+		getContentPane().add(lblImg);
+		
+		JLabel lblProf = new JLabel("Profesor:");
+		lblProf.setBounds(30, 427, 70, 15);
+		lblProf.setVisible(false);
+		getContentPane().add(lblProf);
+		
+		txtProf = new JTextField();
+		txtProf.setEnabled(true);
+		txtProf.setEditable(false);
+		txtProf.setText("Profesor");
+		txtProf.setVisible(false);
+		txtProf.setBounds(183, 425, 114, 19);
+		getContentPane().add(txtProf);
+		txtProf.setColumns(10);
+		
+		JLabel lblUrl = new JLabel("URL:");
+		lblUrl.setBounds(30, 377, 70, 15);
+		getContentPane().add(lblUrl);
+		
+		txtUrl = new JTextField();
+		txtUrl.setText("URL");
+		txtUrl.setEditable(false);
+		txtUrl.setBounds(160, 379, 114, 19);
+		getContentPane().add(txtUrl);
+		txtUrl.setColumns(10);
+
+		cbTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbTipo.getSelectedItem().toString()==" ") {
+					cbNick.removeAllItems();
+					cbNick.addItem(" ");
+				}else {
+					if(cbTipo.getSelectedItem().toString()=="Cliente"){
+						for(Entry<String, Usuario> hm:control.getUsr().entrySet()) {
+							if(hm.getValue() instanceof Socio) {
+								cbNick.addItem(hm.getKey());
+							}
+						}
+					}else {
+						for(Entry<String, Usuario> hm:control.getUsr().entrySet()) {
+							if(hm.getValue() instanceof Profesor) {
+								cbNick.addItem(hm.getKey());
+							}
+						}
+					}
+				}
+			}
+		});
+
+		cbNick.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbNick.getSelectedItem()==" ") {
+					txtNombre.setText("Nombre");
+					txtApellido.setText("Apellido");
+					txtMail.setText("Correo");
+					txtFnac.setValue(LocalDate.now());
+				}else {
+					txtNombre.setText(control.getUsr().get(cbNick.getSelectedItem().toString()).getNombre());
+					txtApellido.setText(control.getUsr().get(cbNick.getSelectedItem().toString()).getApellido());
+					txtMail.setText(control.getUsr().get(cbNick.getSelectedItem().toString()).getMail());
+					txtFnac.setValue(control.getUsr().get(cbNick.getSelectedItem().toString()).getFechanac());
+					lblImg.setIcon(new ImageIcon(control.getUsr().get(cbNick.getSelectedItem().toString()).getFoto()));
+					if(cbTipo.getSelectedItem().toString()=="Cliente") {
+						Socio s=(Socio) control.getUsr().get(cbNick.getSelectedItem().toString());
+						txtDesc.setText(" ");
+						txtBio.setText(" ");
+						txtWeb.setText(" ");
+						if(cbClases.getItemCount()>1) {
+							cbClases.removeAll();
+							cbClases.addItem(" ");
+						}
+						Iterator<Fecha_Registro> its=s.getClases().iterator();
+						while(its.hasNext()) {
+							cbClases.addItem(its.next().getClase().getNombre());
+						}
+					}else {
+						Profesor p=(Profesor) control.getUsr().get(cbNick.getSelectedItem().toString());
+						txtDesc.setText(p.getDesc());
+						txtBio.setText(p.getBio());
+						txtWeb.setText(p.getWeb());
+						txtInstituto.setText(p.getIns().getNombre());
+						if(cbClases.getItemCount()>1) {
+							cbClases.removeAll();
+							cbClases.addItem(" ");
+						}
+						Iterator<Clase> itp=p.getClases().iterator();
+						while(itp.hasNext()) {
+							cbClases.addItem(itp.next().getNombre());
+						}
+						
+					}
+				}
+			}
+		});
+		
+		cbClases.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbTipo.getSelectedItem()!=" ") {
+					Clase c;
+					if(cbTipo.getSelectedItem()=="Cliente") {
+						Socio u=(Socio)control.getUsr().get(cbNick.getSelectedItem().toString());
+						Iterator<Fecha_Registro> its=u.getClases().iterator();
+						while(its.next().getClase().getNombre()!=cbClases.getSelectedItem().toString()) {}
+						c=its.next().getClase();
+						txtProf.setText(c.getProf().getNick());
+					}else {
+						Profesor u=(Profesor)control.getUsr().get(cbNick.getSelectedItem().toString());
+						Iterator<Clase> itp=u.getClases().iterator();
+						while(itp.next().getNombre()!=cbClases.getSelectedItem().toString()) {}
+						c=itp.next();
+					}
+					txtActividad.setText(c.getAct().getNombre());
+					txtFDict.setText(c.getFecha_dict().toString());
+					txtHDict.setText(c.getHora_dict().toString());
+					txtDur.setText(((Integer)c.getAct().getDuracion()).toString());
+					txtUrl.setText(c.getUrl());
+				}
+			}
+		});
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
