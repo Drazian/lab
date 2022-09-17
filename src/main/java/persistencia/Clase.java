@@ -1,15 +1,17 @@
-package Logica;
+package persistencia;
+
+import java.time.*;
 
 public class Clase{
 	private String nombre,url;
 	private int regitrados_min,regitrados_max,cantRegistrados;
-	private Fecha fecha_reg, fecha_dict;
-	private Hora hora_dict;
+	private LocalDate fecha_reg, fecha_dict;
+	private Localtime hora_dict;
 	private Actividad act;
 	private Profesor prof;
 	
 	
-	public Clase(String n, String u, int rmin, int rmax, Fecha fr, Fecha fd, Actividad a, Profesor p, Hora h) {
+	public Clase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Actividad a, Profesor p, LocalTime h) {
 		this.nombre = n;
 		this.url = u;
 		this.regitrados_min = rmin;
@@ -46,15 +48,15 @@ public class Clase{
         return regitrados_max;
     }
     
-    public Fecha getFecha_reg() {
+    public LocalDate getFecha_reg() {
     	return fecha_reg;
     }
     
-    public Fecha getFecha_dict() {
+    public LocalDate getFecha_dict() {
     	return fecha_dict;
     }
     
-    public Hora getHora_dict() {
+    public LocalTime getHora_dict() {
     	return hora_dict;
     }
     
@@ -82,11 +84,11 @@ public class Clase{
     	regitrados_max = ap;
     }
     
-    public void setFecha_reg(Fecha f) {
+    public void setFecha_reg(LocalDate f) {
     	fecha_reg = f;
     }
     
-    public void setFecha_dict(Fecha f) {
+    public void setFecha_dict(LocalDate f) {
     	fecha_dict = f;
     }
     
@@ -94,7 +96,7 @@ public class Clase{
     	prof = f;
     }
     
-    public void setHora_dict(Hora h) {
+    public void setHora_dict(LocalTime h) {
     	hora_dict = h;
     }
     

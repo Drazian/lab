@@ -1,4 +1,4 @@
-package Logica;
+package persistencia;
 
 import java.time.LocalDate;  // Importa la clase para la fecha
 

@@ -1,4 +1,4 @@
-package Logica;
+package persistencia;
 
 public class Clases_contenidas {
 	private Cuponera cupon;

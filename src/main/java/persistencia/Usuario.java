@@ -1,12 +1,13 @@
-package Logica;
+package persistencia;
 
 import java.io.Serializable; 
+import java.time.*;
 
 public class Usuario implements Serializable {
 	protected String nickname,nombre,apellido,mail,foto;
-	protected Fecha fechanac;
+	protected LocalDate fechanac;
 	
-	public Usuario(String ni, String n, String ap, String ma, Fecha f,String fot) {
+	public Usuario(String ni, String n, String ap, String ma, LocalDate f,String fot) {
         this.nickname = ni;
         this.nombre = n;
         this.apellido = ap;
@@ -31,7 +32,7 @@ public class Usuario implements Serializable {
         return mail;
     }
 
-    public Fecha getFechanac() {
+    public LocalDate getFechanac() {
         return fechanac;
     }
     
@@ -55,7 +56,7 @@ public class Usuario implements Serializable {
         mail = ap;
     }
 
-    public void setFechanac(Fecha ap) {
+    public void setFechanac(LocalDate ap) {
         fechanac = ap;
     }
 

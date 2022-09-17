@@ -1,6 +1,8 @@
-package Logica;
+package persistencia;
 
 import java.util.HashMap;
+
+import java.time.*;
 
 
 public class Controller implements IController {
@@ -37,31 +39,32 @@ public class Controller implements IController {
 		if(!ins.containsKey(nombre)) {
 			Institucion d=new Institucion(nombre,desc,url);
 			ins.put(nombre,d);
-		}else {/*tira excepcion*/}
+                }
 	}
 	
-	public void altaSocio(String nick, String nom, String ap, String mail, Fecha fnac, String foto) {
+	public void altaSocio(String nick, String nom, String ap, String mail, LocalDate fnac, String foto) {
 		if(!usr.containsKey(nick)) {
 			Usuario u=new Socio(nick,nom,ap,mail,fnac,foto);
 			usr.put(nick,u);
-		}else {/*tira excepcion*/}
+                }
 	}
 	
-	public void altaProf(String nick, String nom, String ap, String mail, String desc, String bio, String web, Fecha fnac, Institucion i, String foto) {
+	public void altaProf(String nick, String nom, String ap, String mail, String desc, String bio, String web, LocalDate fnac, Institucion i, String foto) {
 		if(!usr.containsKey(nick)) {
 			Usuario u=new Profesor(nick,nom,ap,mail,desc,bio,web,fnac,i,foto);
 			usr.put(nick,u);
-		}else {/*tira excepcion*/}
+                        i.getProfesores().add((Profesor) u);
+                }
 	}
 	
-	public void altaActividad(String nom, String desc,  int duracion, int costo, Fecha fecha,Institucion i) {
+	public void altaActividad(String nom, String desc,  int duracion, int costo, LocalDate fecha,Institucion i) {
 		if(!act.containsKey(nom)) {
 			Actividad a=new Actividad(nom,desc,duracion,costo,fecha,i);
 			act.put(nom, a);
 			i.getActividades().add(a);
-		}else {/*tira excepcion*/}
 	}
 
+    }
 }
 
 

@@ -1,14 +1,15 @@
-package Logica;
+package persistencia;
 
 import java.util.HashSet;
+import java.time.*;
 
 public class Cuponera{
 	private String nombre,descripcion;
 	private int descuento;
-	private Fecha fecha_ini, fecha_fin;
+	private LocalDate fecha_ini, fecha_fin;
 	private HashSet<Clases_contenidas> cont;
 	
-	public Cuponera(String n, String d, int desc, Fecha fi, Fecha ff) {
+	public Cuponera(String n, String d, int desc, LocalDate fi, LocalDate ff) {
 		this.nombre=n;
 		this.descripcion=d;
 		this.descuento=desc;
@@ -29,11 +30,11 @@ public class Cuponera{
         return descuento;
     }
     
-    public Fecha getFecha_ini() {
+    public LocalDate getFecha_ini() {
     	return fecha_ini;
     }
     
-    public Fecha getFecha_fin() {
+    public LocalDate getFecha_fin() {
     	return fecha_fin;
     }
     
@@ -53,11 +54,11 @@ public class Cuponera{
     	descuento = ap;
     }
     
-    public void setFecha_ini(Fecha f) {
+    public void setFecha_ini(LocalDate f) {
     	fecha_ini = f;
     }
     
-    public void setFecha_fin(Fecha f) {
+    public void setFecha_fin(LocalDate f) {
     	fecha_fin = f;
     }
     

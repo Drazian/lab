@@ -1,4 +1,4 @@
-package Logica;
+package persistencia;
 
 import java.time.LocalTime;  // Importa la clase para la hora
 

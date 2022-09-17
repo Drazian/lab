@@ -1,13 +1,13 @@
-package Logica;
+package persistencia;
 
 import java.util.HashSet;
-import java.time.LocalDate;
+import java.time.*;
 
 public class Socio extends Usuario{
 	private HashSet<Fecha_Compra> cupon;
 	private HashSet<Fecha_Registro> anotado;
 	
-	public Socio(String ni, String n, String ap, String ma, Fecha f,String foto) {
+	public Socio(String ni, String n, String ap, String ma, LocalDate f,String foto) {
 		super(ni, n, ap, ma, f, foto);
 		this.cupon = new HashSet<Fecha_Compra>();
 		this.anotado = new HashSet<Fecha_Registro>();

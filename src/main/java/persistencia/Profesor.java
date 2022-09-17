@@ -1,5 +1,6 @@
-package Logica;
+package persistencia;
 
+import java.time.*;
 import java.util.HashSet;
 
 public class Profesor extends Usuario{
@@ -7,7 +8,7 @@ public class Profesor extends Usuario{
 	private Institucion ins;
 	private HashSet<Clase> cls;
 	
-	public Profesor(String ni, String n, String ap, String ma, String desc, String bio, String web, Fecha f, Institucion i, String foto) {
+	public Profesor(String ni, String n, String ap, String ma, String desc, String bio, String web, LocalDate f, Institucion i, String foto) {
 		super(ni, n, ap, ma, f, foto);
 		this.descripcion = desc;
 		this.biografia = bio;

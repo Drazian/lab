@@ -1,4 +1,4 @@
-package Logica;
+package persistencia;
 
 import java.util.HashSet;
 

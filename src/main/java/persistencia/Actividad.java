@@ -1,18 +1,19 @@
-package Logica;
+package persistencia;
 
 import java.util.HashSet;
 import java.util.HashMap; 
+import java.time.*;
 
 public class Actividad{
 	private String nombre,descripcion;
 	private int costo, duracion;
-	private Fecha fecha_reg;
+	private LocalDate fecha_reg;
 	private Institucion ins;
 	private HashSet<Clases_contenidas> asociadas;
 	private HashMap<String, Clase> cls;
 	
 	
-	public Actividad(String n, String d, int c, int dur, Fecha f, Institucion i) {
+	public Actividad(String n, String d, int c, int dur, LocalDate f, Institucion i) {
 		this.costo = c;
 		this.duracion = dur;
 		this.descripcion = d;
@@ -39,7 +40,7 @@ public class Actividad{
         return duracion;
     }
     
-    public Fecha getFecha_reg() {
+    public LocalDate getFecha_reg() {
     	return fecha_reg;
     }
     
@@ -63,7 +64,7 @@ public class Actividad{
     	costo = ap;
     }
     
-    public void setFecha_reg(Fecha f) {
+    public void setFecha_reg(LocalDate f) {
     	fecha_reg = f;
     }
     
@@ -75,7 +76,7 @@ public class Actividad{
     	ins = i;
     }
     
-    public void altaClase(String n, String u, int rmin, int rmax, Fecha fr, Fecha fd, Profesor p, Hora h) {
+    public void altaClase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Profesor p, LocalTime h) {
     	Clase c=new Clase(n,u,rmin,rmax,fr,fd,this,p,h);
     	cls.put(n, c);
     	p.addClases(c);

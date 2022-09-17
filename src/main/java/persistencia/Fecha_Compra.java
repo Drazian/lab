@@ -1,11 +1,13 @@
-package Logica;
+package persistencia;
+
+import java.time.LocalDate;
 
 public class Fecha_Compra  {
 	private Socio sc;
 	private Cuponera cpn;
-	private Fecha fch;
+	private LocalDate fch;
 	
-	public Fecha_Compra(Socio s, Cuponera c, Fecha f) {
+	public Fecha_Compra(Socio s, Cuponera c, LocalDate f) {
 		this.sc=s;
 		this.cpn=c;
 		this.fch=f;
@@ -19,7 +21,7 @@ public class Fecha_Compra  {
 		return cpn;
 	}
 	
-	public Fecha getFecha() {
+	public LocalDate getFecha() {
 		return fch;
 	}
 	
@@ -31,7 +33,7 @@ public class Fecha_Compra  {
 		cpn=c;
 	}
 	
-	public void setFecha(Fecha f) {
+	public void setFecha(LocalDate f) {
 		fch=f;
 	}
 }
