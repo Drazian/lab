@@ -1,4 +1,4 @@
-package laboratorio;
+package persentacion;
 
 import java.awt.EventQueue;    
 
@@ -9,18 +9,10 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Institucion;
-import Logica.Actividad;
-import Logica.Profesor;
-import Logica.Clase;
-import Logica.Fabrica;
-import Logica.Fecha;
-import Logica.Hora;
+import persistencia.*;
 
 import java.awt.GridLayout;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
@@ -47,7 +39,7 @@ public class RegistroClase extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -188,11 +180,11 @@ public class RegistroClase extends JInternalFrame {
 								JFrame f=new JFrame();
 								JOptionPane.showMessageDialog(f, "Ese Nombre ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								Fecha f1=new Fecha(LocalDate.now());
-								Fecha f2=new Fecha((LocalDate) ((JFormattedTextField) txtFecha).getValue());
+								LocalDate f1=LocalDate.now();
+								LocalDate f2=(LocalDate)((JFormattedTextField)txtFecha).getValue();
 								Actividad a=control.getAct().get(cbActividadDeportiva.getSelectedItem().toString());
 								Profesor p=(Profesor) control.getUsr().get(cbProfesor.getSelectedItem().toString());
-								Hora h= new Hora((LocalTime) ((JFormattedTextField) txtHora).getValue());
+								LocalTime h=(LocalTime) ((JFormattedTextField) txtHora).getValue();
 								Clase c=new Clase(txtNombre.getText(),txtUrl.getText(),Integer.parseInt(txtMin.getText()),Integer.parseInt(txtMax.getText()),f1,f2,a,p,h);
 							}
 						}

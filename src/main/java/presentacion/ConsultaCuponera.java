@@ -1,12 +1,8 @@
-package laboratorio;
+package presentacion;
 
 import java.awt.EventQueue; 
 
-import Logica.IController;
-import Logica.Cuponera;
-import Logica.Institucion;
-import Logica.Actividad;
-import Logica.Clases_contenidas;
+import persistencia.*;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -44,7 +40,7 @@ public class ConsultaCuponera extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -180,8 +176,8 @@ public class ConsultaCuponera extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				Cuponera cpn=control.getCpn().get(cmbNombre.getSelectedItem().toString());
 				txtCpnDesc.setText(cpn.getDescripcion());
-				txtInicio.setText(cpn.getFecha_ini().getFecha().toString());
-				txtFin.setText(cpn.getFecha_fin().getFecha().toString());
+				txtInicio.setText(cpn.getFecha_ini().toString());
+				txtFin.setText(cpn.getFecha_fin().toString());
 				txtDesc.setText(Integer.toString(cpn.getDescuento()));
 				if(cmbAct.getItemCount()>1) {
 					cmbAct.removeAllItems();

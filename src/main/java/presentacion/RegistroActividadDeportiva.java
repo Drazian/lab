@@ -40,7 +40,7 @@ public class RegistroActividadDeportiva extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -132,7 +132,7 @@ public class RegistroActividadDeportiva extends JInternalFrame {
 						JOptionPane.showMessageDialog(f, "Ese Nombre ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 					}else {
 						Institucion i=control.getIns().get(cbInstituto.getSelectedItem().toString());
-						Fecha f= new Fecha(LocalDate.now());
+						LocalDate f= LocalDate.now();
 						control.altaActividad(txtNombre.getText(),txtDescripcion.getText(),Integer.parseInt(txtDuracion.getText()),Integer.parseInt(txtCosto.getText()),f,i);
 					}
 				}

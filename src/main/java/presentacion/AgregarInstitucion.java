@@ -1,10 +1,9 @@
-package laboratorio;
+package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import Logica.Fabrica;
-import Logica.IController;
+import persistencia.*;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -30,7 +29,7 @@ public class AgregarInstitucion extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

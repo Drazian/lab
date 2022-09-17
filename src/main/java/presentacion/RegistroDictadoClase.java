@@ -1,4 +1,4 @@
-package laboratorio;
+package presentacion;
 
 import java.awt.EventQueue; 
 
@@ -9,16 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Actividad;
-import Logica.Clase;
-import Logica.Fabrica;
-import Logica.Fecha;
-import Logica.Institucion;
-import Logica.Usuario;
-import Logica.Profesor;
-import Logica.Socio;
-import Logica.Fecha_Registro;
+import persistencia.*;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -46,7 +37,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -214,11 +205,11 @@ public class RegistroDictadoClase extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(cmbNombre.getSelectedItem()!=" ") {
 					Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
-					txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict().getFecha());
-					txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict().getHora());
+					txtFecha.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getFecha_dict());
+					txtHora.setValue(a.getClases().get(cmbNombre.getSelectedItem().toString()).getHora_dict());
 					txtProfesor.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getProf().getNick());
 					txtMin.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmin()));
-					txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRax()));
+					txtMax.setText(Integer.toString(a.getClases().get(cmbNombre.getSelectedItem().toString()).getRmax()));
 					txtUrl.setText(a.getClases().get(cmbNombre.getSelectedItem().toString()).getUrl());	
 				}else {
 					txtFecha.setText(" ");
@@ -238,7 +229,7 @@ public class RegistroDictadoClase extends JInternalFrame {
 					if(cmbSocio.getItemCount()>0) {
 						if((cmbInstituto.getSelectedItem()!=" ")&&(cmbActividad.getSelectedItem()!=" ")&&(cmbNombre.getSelectedItem()!=" ")) {
 							Clase c=control.getAct().get(cmbActividad.getSelectedItem().toString()).getClases().get(cmbNombre.getSelectedItem().toString());
-							if(c.getRegis()==c.getRax()) {
+							if(c.getRegis()==c.getRmax()) {
 								JFrame f=new JFrame();
 								JOptionPane.showMessageDialog(f, "Los cupos de esa Clase ya se llenaron, por favor seleccione otra.", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {

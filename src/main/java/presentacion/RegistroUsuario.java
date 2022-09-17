@@ -1,4 +1,4 @@
-package laboratorio;
+package presentacion;
 
 import java.awt.EventQueue;      
 
@@ -9,11 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Fabrica;
-import Logica.Fecha;
-import Logica.Institucion;
-import Logica.Usuario;
+import persistencia.*;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -54,7 +50,7 @@ public class RegistroUsuario extends JInternalFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 *
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -230,7 +226,7 @@ public class RegistroUsuario extends JInternalFrame {
 						JFrame f=new JFrame();
 						JOptionPane.showMessageDialog(f, "Ese Mail ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 					}else {
-						Fecha f=new Fecha((LocalDate) txtFecha.getValue());
+						LocalDate f=(LocalDate) txtFecha.getValue();
 						if(cbTipo.getSelectedItem()=="Cliente") {
 							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,txtFile.getText());
 						}else {

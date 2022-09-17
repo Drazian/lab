@@ -1,4 +1,4 @@
-package laboratorio;
+package presentacion;
 
 import java.awt.EventQueue;
 
@@ -13,8 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.SwingConstants;
 
-import Logica.IController;
-import Logica.Fabrica;
+import persistencia.*;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JDesktopPane;
