@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import persistencia.*;
 
@@ -34,6 +35,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JFormattedTextField;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class RegistroUsuario extends JInternalFrame {
 	private JTextField txtNombre;
@@ -227,11 +232,27 @@ public class RegistroUsuario extends JInternalFrame {
 						JOptionPane.showMessageDialog(f, "Ese Mail ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 					}else {
 						LocalDate f=(LocalDate) txtFecha.getValue();
+						File source=new File(txtFile.getText());
+						String ext = txtFile.getText().substring(txtFile.getText().lastIndexOf('.') + 1);
+						File crpeta=new File("/home/fotos");
+						File dest=new File("/home/fotos/"+txtNickname.getText()+"."+ext);
+						try {
+							if(!crpeta.exists()) {
+								crpeta.mkdirs();
+							}
+							if(dest.exists()) {
+								dest.delete();
+							}
+							Files.copy(source.toPath().toAbsolutePath() , dest.toPath().toAbsolutePath());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						if(cbTipo.getSelectedItem()=="Cliente") {
-							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,txtFile.getText());
+							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,dest.getAbsolutePath());
 						}else {
 							Institucion i=control.getIns().get(cmbInst.getSelectedItem().toString());
-							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i,txtFile.getText());
+							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i,dest.getAbsolutePath());
 						}
 					}	
 				}
