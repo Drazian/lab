@@ -65,6 +65,18 @@ public class Controller implements IController {
 	}
 
     }
+	
+	public void crearCuponeraActividadDeportiva(String nombre, String desc, LocalDate fechaInicio, LocalDate fechaFin, float descuento, HashMap<String,Cuponera> cpn) {
+		if(cpn.containsKey(nombre)) {
+			//Tira excepcion
+		}
+		else {
+			cpn.put(nombre, desc, fechaInicio, fechaFin, descuento);
+		}
+	}
+	
+	
+			
 }
 
 
