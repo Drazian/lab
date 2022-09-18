@@ -75,6 +75,21 @@ public class Controller implements IController {
 		}
 	}
 	
+	public HashMap<String,Cuponera> listarCuponeras() {
+		String clave;
+		Iterator<String> lista = listarCuponeras.keySet().iterator();
+		while(lista.hasNext()) {
+			clave=lista.next();
+			return clave;
+		}
+	}
+	
+	public void escogerCuponera(HashMap<String,Cuponera> nombreCupo) {
+		this.cpn = nombreCupo;
+	}
+	
+	
+	
 	
 			
 }
