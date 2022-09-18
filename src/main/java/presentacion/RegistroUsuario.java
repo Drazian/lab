@@ -232,14 +232,12 @@ public class RegistroUsuario extends JInternalFrame {
 						JOptionPane.showMessageDialog(f, "Ese Mail ya esta usado, por favor ingrese otro.", "Error", JOptionPane.ERROR_MESSAGE);
 					}else {
 						LocalDate f=(LocalDate) txtFecha.getValue();
-						File source=new File(txtFile.getText());
+						/*File source=new File(txtFile.getText());
 						String ext = txtFile.getText().substring(txtFile.getText().lastIndexOf('.') + 1);
 						File crpeta=new File("/home/fotos");
 						File dest=new File("/home/fotos/"+txtNickname.getText()+"."+ext);
+						crpeta.mkdirs();
 						try {
-							if(!crpeta.exists()) {
-								crpeta.mkdirs();
-							}
 							if(dest.exists()) {
 								dest.delete();
 							}
@@ -247,13 +245,14 @@ public class RegistroUsuario extends JInternalFrame {
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-						}
+						}*/
 						if(cbTipo.getSelectedItem()=="Cliente") {
-							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,dest.getAbsolutePath());
+							control.altaSocio(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),f,/*dest.getAbsolutePath()*/txtFile.getText());
 						}else {
 							Institucion i=control.getIns().get(cmbInst.getSelectedItem().toString());
-							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i,dest.getAbsolutePath());
+							control.altaProf(txtNickname.getText(),txtNombre.getText(),txtApellido.getText(),txtCorreo.getText(),txtDesc.getText(),txtBio.getText(),txtUrl.getText(),f,i,/*dest.getAbsolutePath()*/txtFile.getText());
 						}
+						setVisible(false);
 					}	
 				}
 			}
