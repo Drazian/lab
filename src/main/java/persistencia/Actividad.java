@@ -52,6 +52,10 @@ public class Actividad{
     	return cls;
     }
     
+    public HashSet<Clases_contenidas> getCpn(){
+    	return asociadas;
+    }
+    
     public void setNombre(String n) {
         nombre = n;
     }
