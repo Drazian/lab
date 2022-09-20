@@ -1,19 +1,30 @@
 package persistencia;
 
-import java.util.HashSet;
-import java.util.HashMap; 
+import java.io.Serializable;
+import java.util.*; 
 import java.time.*;
+import javax.persistence.*;
 
-public class Actividad{
-	private String nombre,descripcion;
+
+@Entity
+public class Actividad implements Serializable{
+        @Id
+	private String nombre;
+        private String descripcion;
 	private int costo, duracion;
 	private LocalDate fecha_reg;
+        @ManyToOne
 	private Institucion ins;
-	private HashSet<Clases_contenidas> asociadas;
-	private HashMap<String, Clase> cls;
+        @OneToMany
+	private Set<Clases_contenidas> asociadas;
+        @OneToMany
+	private Map<String, Clase> cls;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
 	
 	
-	public Actividad(String n, String d, int c, int dur, LocalDate f, Institucion i) {
+	public Actividad(){}
+        public Actividad(String n, String d, int c, int dur, LocalDate f, Institucion i) {
 		this.costo = c;
 		this.duracion = dur;
 		this.descripcion = d;
@@ -48,11 +59,11 @@ public class Actividad{
     	return ins;
     }
     
-    public HashMap<String, Clase> getClases(){
+    public Map<String, Clase> getClases(){
     	return cls;
     }
     
-    public HashSet<Clases_contenidas> getCpn(){
+    public Set<Clases_contenidas> getCpn(){
     	return asociadas;
     }
     
@@ -84,5 +95,8 @@ public class Actividad{
     	Clase c=new Clase(n,u,rmin,rmax,fr,fd,this,p,h);
     	cls.put(n, c);
     	p.addClases(c);
+        em.getTransaction().begin();
+        em.persist(c);
+        em.getTransaction().commit();
     }
 }

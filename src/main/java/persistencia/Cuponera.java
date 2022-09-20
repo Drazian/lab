@@ -1,21 +1,28 @@
 package persistencia;
 
-import java.util.HashSet;
+import java.io.Serializable;
+import java.util.*;
 import java.time.*;
+import javax.persistence.*;
 
-public class Cuponera{
-	private String nombre,descripcion;
+@Entity
+public class Cuponera implements Serializable{
+        @Id
+	private String nombre;
+        private String descripcion;
 	private int descuento;
 	private LocalDate fecha_ini, fecha_fin;
-	private HashSet<Clases_contenidas> cont;
+        @OneToMany
+	private Set<Clases_contenidas> cont;
 	
-	public Cuponera(String n, String d, int desc, LocalDate fi, LocalDate ff) {
+	public Cuponera(){}
+        public Cuponera(String n, String d, int desc, LocalDate fi, LocalDate ff) {
 		this.nombre=n;
 		this.descripcion=d;
 		this.descuento=desc;
 		this.fecha_ini=fi;
 		this.fecha_fin=ff;
-		cont = new HashSet<Clases_contenidas>();
+		//this.cont = new HashSet<Clases_contenidas>();
 	}
 
     public String getNombre() {
@@ -38,7 +45,7 @@ public class Cuponera{
     	return fecha_fin;
     }
     
-    public HashSet<Clases_contenidas> getClsCont(){
+    public Set<Clases_contenidas> getClsCont(){
     	return cont;
     }
     

@@ -1,18 +1,36 @@
 package persistencia;
 
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 
-public class Institucion {
-	private String nombre,descripcion,url;
-	private HashSet<Actividad> act;
-	private HashSet<Profesor> prof;
+@Entity
+public class Institucion implements Serializable {
+        @Id
+	private String nombre;
+        private String descripcion,url;
+        @OneToMany
+	private Set<Actividad> act;
+        
+        @OneToMany
+	private Set<Profesor> prof;
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
 	
-	public Institucion(String n, String d, String u) {
+	public Institucion(){}
+        public Institucion(String n, String d, String u) {
 		this.nombre=n;
 		this.descripcion=d;
 		this.url=u;
-		this.act=new HashSet<Actividad>();
 		this.prof=new HashSet<Profesor>();
+		this.act=new HashSet<Actividad>();
 	}
 
     public String getNombre() {
@@ -27,11 +45,11 @@ public class Institucion {
         return url;
     }
     
-    public HashSet<Actividad> getActividades(){
+    public Set<Actividad> getActividades(){
     	return act;
     }
     
-    public HashSet<Profesor> getProfesores(){
+    public Set<Profesor> getProfesores(){
     	return prof;
     }
     
@@ -49,9 +67,15 @@ public class Institucion {
     
     public void addAct(Actividad a) {
     	act.add(a);
+        em.getTransaction().begin();
+        em.merge(a);
+        em.getTransaction().commit();
     }
     
     public void addProf(Profesor p) {
     	prof.add(p);
+        em.getTransaction().begin();
+        em.merge(p);
+        em.getTransaction().commit();
     }
 }

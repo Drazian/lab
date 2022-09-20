@@ -3,49 +3,60 @@ package persistencia;
 import java.util.HashMap;
 
 import java.time.*;
+import java.util.Iterator;
+import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class Controller implements IController {
-	private HashMap<String, Usuario> usr;
-	private HashMap<String, Cuponera> cpn;
-	private HashMap<String, Actividad> act;
-	private HashMap<String, Institucion> ins;
+	private Map<String, Usuario> usr;
+	private Map<String, Cuponera> cpn;
+	private Map<String, Actividad> act;
+	private Map<String, Institucion> ins;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
 	
 	public Controller() {
-		ins=new HashMap<String, Institucion>();
-		act=new HashMap<String, Actividad>();
-		cpn=new HashMap<String, Cuponera>();
-		usr=new HashMap<String, Usuario>();
+		this.ins=new HashMap<String, Institucion>();
+		this.usr= HashMap<String, Usuario>(); 
+		this.cpn= HashMap<String, Cuponera>();
+		this.act= HashMap<String, Actividad>();
 		
 	}
 	
-	public HashMap<String, Usuario> getUsr(){
+	public Map<String, Usuario> getUsr(){
 		return usr;
 	}
 	
-	public HashMap<String, Cuponera> getCpn(){
+	public Map<String, Cuponera> getCpn(){
 		return cpn;
 	}
 	
-	public HashMap<String, Actividad> getAct(){
+	public Map<String, Actividad> getAct(){
 		return act;
 	}
 	
-	public HashMap<String, Institucion> getIns(){
+	public Map<String, Institucion> getIns(){
 		return ins;
 	}
 	
 	public void altaInstitucion(String nombre, String desc, String url) {
-		if(!ins.containsKey(nombre)) {
+                        em.getTransaction().begin();
 			Institucion d=new Institucion(nombre,desc,url);
-			ins.put(nombre,d);
-                }
+			//ins.put(nombre, d);
+                        em.persist(d);
+                        em.getTransaction().commit();
 	}
 	
 	public void altaSocio(String nick, String nom, String ap, String mail, LocalDate fnac, String foto) {
 		if(!usr.containsKey(nick)) {
 			Usuario u=new Socio(nick,nom,ap,mail,fnac,foto);
 			usr.put(nick,u);
+                        em.getTransaction().begin();
+                        em.persist(u);
+                        em.getTransaction().commit();
                 }
 	}
 	
@@ -54,6 +65,9 @@ public class Controller implements IController {
 			Usuario u=new Profesor(nick,nom,ap,mail,desc,bio,web,fnac,i,foto);
 			usr.put(nick,u);
                         i.getProfesores().add((Profesor) u);
+                        em.getTransaction().begin();
+                        em.persist(u);
+                        em.getTransaction().commit();
                 }
 	}
 	
@@ -62,29 +76,37 @@ public class Controller implements IController {
 			Actividad a=new Actividad(nom,desc,duracion,costo,fecha,i);
 			act.put(nom, a);
 			i.getActividades().add(a);
+                    em.getTransaction().begin();
+                    em.persist(a);
+                    em.getTransaction().commit();
 	}
 
     }
 	
-	public void crearCuponeraActividadDeportiva(String nombre, String desc, LocalDate fechaInicio, LocalDate fechaFin, float descuento, HashMap<String,Cuponera> cpn) {
+	public void crearCuponeraActividadDeportiva(String nombre, String desc, LocalDate fechaInicio, LocalDate fechaFin, int descuento, HashMap<String,Cuponera> cpn) {
 		if(cpn.containsKey(nombre)) {
 			//Tira excepcion
 		}
 		else {
-			cpn.put(nombre, desc, fechaInicio, fechaFin, descuento);
+                        em.getTransaction().begin();
+                        Cuponera aux = new Cuponera(nombre, desc, descuento, fechaInicio, fechaFin);
+			cpn.put(nombre, aux);
+                        em.persist(aux);
+                        em.getTransaction().commit();
 		}
 	}
 	
-	public HashMap<String,Cuponera> listarCuponeras() {
+	/*public String listarCuponeras() {
 		String clave;
-		Iterator<String> lista = listarCuponeras.keySet().iterator();
+		Iterator<String> lista = cpn.keySet().iterator();
 		while(lista.hasNext()) {
 			clave=lista.next();
 			return clave;
 		}
-	}
+                
+	}*/
 	
-	public void escogerCuponera(HashMap<String,Cuponera> nombreCupo) {
+	public void escogerCuponera(Map<String,Cuponera> nombreCupo) {
 		this.cpn = nombreCupo;
 	}
 	

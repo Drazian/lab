@@ -1,25 +1,38 @@
 package persistencia;
 
-import java.util.HashSet;
+import java.io.Serializable;
+import java.util.*;
 import java.time.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.*;
 
-public class Socio extends Usuario{
-	private HashSet<Fecha_Compra> cupon;
-	private HashSet<Fecha_Registro> anotado;
+@Entity
+public class Socio extends Usuario implements Serializable{
+        @OneToMany
+	private Set<Fecha_Compra> cupon;
+        @OneToMany
+	private Set<Fecha_Registro> anotado;
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
 	
-	public Socio(String ni, String n, String ap, String ma, LocalDate f,String foto) {
+	public Socio(){}
+        public Socio(String ni, String n, String ap, String ma, LocalDate f,String foto) {
 		super(ni, n, ap, ma, f, foto);
-		this.cupon = new HashSet<Fecha_Compra>();
-		this.anotado = new HashSet<Fecha_Registro>();
+		this.anotado=new HashSet<Fecha_Registro>();
+		this.cupon=new HashSet<Fecha_Compra>();
 	}
 	
-	public HashSet<Fecha_Registro> getClases(){
+	public Set<Fecha_Registro> getClases(){
 		return anotado;
 	}
 	
 	public void registrarse(Clase c) {
 		Fecha_Registro fr=new Fecha_Registro(this,c,LocalDate.now());
 		anotado.add(fr);
+                em.getTransaction().begin();
+                em.persist(fr);
+                em.getTransaction().commit();
 	}
 	
 }
