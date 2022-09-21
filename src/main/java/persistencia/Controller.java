@@ -17,10 +17,10 @@ public class Controller implements IController {
 	private Map<String, Institucion> ins;
 	       
 	public Controller() {
-		this.ins=new HashMap<>();
-		this.usr=new HashMap<>(); 
-		this.cpn=new HashMap<>();
-		this.act=new HashMap<>();
+		this.ins=new HashMap<String, Institucion>();
+		this.usr=new HashMap<String, Usuario>(); 
+		this.cpn=new HashMap<String, Cuponera>();
+		this.act=new HashMap<String, Actividad>();
             try {
                 inicializar();
             } catch (SQLException ex) {
