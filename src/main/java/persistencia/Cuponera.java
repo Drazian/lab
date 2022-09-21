@@ -22,7 +22,7 @@ public class Cuponera implements Serializable{
 		this.descuento=desc;
 		this.fecha_ini=fi;
 		this.fecha_fin=ff;
-		//this.cont = new HashSet<Clases_contenidas>();
+		this.cont = new HashSet<Clases_contenidas>();
 	}
 
     public String getNombre() {

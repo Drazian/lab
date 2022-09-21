@@ -20,9 +20,6 @@ public class Institucion implements Serializable {
         
         @OneToMany
 	private Set<Profesor> prof;
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
-        EntityManager em = emf.createEntityManager();
 	
 	public Institucion(){}
         public Institucion(String n, String d, String u) {
@@ -66,6 +63,9 @@ public class Institucion implements Serializable {
     }
     
     public void addAct(Actividad a) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
+        
     	act.add(a);
         em.getTransaction().begin();
         em.merge(a);
@@ -73,6 +73,9 @@ public class Institucion implements Serializable {
     }
     
     public void addProf(Profesor p) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
+        
     	prof.add(p);
         em.getTransaction().begin();
         em.merge(p);

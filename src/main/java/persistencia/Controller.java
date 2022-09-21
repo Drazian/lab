@@ -15,17 +15,14 @@ public class Controller implements IController {
 	private Map<String, Cuponera> cpn;
 	private Map<String, Actividad> act;
 	private Map<String, Institucion> ins;
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
-        EntityManager em = emf.createEntityManager();
-	
+	       
 	public Controller() {
-		this.ins=new HashMap<String, Institucion>();
-		this.usr= HashMap<String, Usuario>(); 
-		this.cpn= HashMap<String, Cuponera>();
-		this.act= HashMap<String, Actividad>();
-		
-	}
-	
+		this.ins=new HashMap<>();
+		this.usr=new HashMap<>(); 
+		this.cpn=new HashMap<>();
+		this.act=new HashMap<>();
+	}    
+        
 	public Map<String, Usuario> getUsr(){
 		return usr;
 	}
@@ -43,6 +40,8 @@ public class Controller implements IController {
 	}
 	
 	public void altaInstitucion(String nombre, String desc, String url) {
+                        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                        EntityManager em = emf.createEntityManager();
                         em.getTransaction().begin();
 			Institucion d=new Institucion(nombre,desc,url);
 			//ins.put(nombre, d);
@@ -52,6 +51,8 @@ public class Controller implements IController {
 	
 	public void altaSocio(String nick, String nom, String ap, String mail, LocalDate fnac, String foto) {
 		if(!usr.containsKey(nick)) {
+                        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                        EntityManager em = emf.createEntityManager();
 			Usuario u=new Socio(nick,nom,ap,mail,fnac,foto);
 			usr.put(nick,u);
                         em.getTransaction().begin();
@@ -62,6 +63,8 @@ public class Controller implements IController {
 	
 	public void altaProf(String nick, String nom, String ap, String mail, String desc, String bio, String web, LocalDate fnac, Institucion i, String foto) {
 		if(!usr.containsKey(nick)) {
+                        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                        EntityManager em = emf.createEntityManager();                    
 			Usuario u=new Profesor(nick,nom,ap,mail,desc,bio,web,fnac,i,foto);
 			usr.put(nick,u);
                         i.getProfesores().add((Profesor) u);
@@ -73,6 +76,8 @@ public class Controller implements IController {
 	
 	public void altaActividad(String nom, String desc,  int duracion, int costo, LocalDate fecha,Institucion i) {
 		if(!act.containsKey(nom)) {
+                        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                        EntityManager em = emf.createEntityManager();                    
 			Actividad a=new Actividad(nom,desc,duracion,costo,fecha,i);
 			act.put(nom, a);
 			i.getActividades().add(a);
@@ -88,6 +93,8 @@ public class Controller implements IController {
 			//Tira excepcion
 		}
 		else {
+                                            EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                        EntityManager em = emf.createEntityManager();
                         em.getTransaction().begin();
                         Cuponera aux = new Cuponera(nombre, desc, descuento, fechaInicio, fechaFin);
 			cpn.put(nombre, aux);
@@ -115,32 +122,3 @@ public class Controller implements IController {
 	
 			
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

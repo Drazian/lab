@@ -1,12 +1,19 @@
 package persistencia;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.*;
+import javax.persistence.*;
 
-public class Fecha_Compra  {
+@Entity
+public class Fecha_Compra implements Serializable  {
+        @Id
 	private Socio sc;
+        @ManyToOne
 	private Cuponera cpn;
 	private LocalDate fch;
 	
+        
+	public Fecha_Compra(){}
 	public Fecha_Compra(Socio s, Cuponera c, LocalDate f) {
 		this.sc=s;
 		this.cpn=c;

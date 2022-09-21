@@ -150,7 +150,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmConsultaCliente = new JMenuItem("Consulta usuario");
 		mntmConsultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConsultaUsuario aux= new ConsultaUsuario();
+				ConsultaUsuario aux= new ConsultaUsuario(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();					
 			}
@@ -161,7 +161,7 @@ public class VentanaPrincipal {
 		JMenuItem mntmConsultaActividadDeportiva = new JMenuItem("Consulta actividad deportiva");
 		mntmConsultaActividadDeportiva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ConsultaActividadDeportiva aux= new ConsultaActividadDeportiva();
+				ConsultaActividadDeportiva aux= new ConsultaActividadDeportiva(ICU);
 				frmVentanaPrincipal.getContentPane().add(aux);
 				aux.show();	
 			}

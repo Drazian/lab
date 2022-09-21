@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import persistencia.Actividad;
 import persistencia.Cuponera;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-04T17:17:53")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-21T03:00:10")
 @StaticMetamodel(Clases_contenidas.class)
 public class Clases_contenidas_ { 
 

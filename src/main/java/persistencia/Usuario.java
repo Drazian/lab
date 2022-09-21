@@ -2,11 +2,19 @@ package persistencia;
 
 import java.io.Serializable; 
 import java.time.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.*;
 
+@Entity
 public class Usuario implements Serializable {
-	protected String nickname,nombre,apellido,mail,foto;
+        @Id
+        protected String nickname;
+	protected String nombre,apellido,mail,foto;
 	protected LocalDate fechanac;
 	
+        public Usuario(){}
+        
 	public Usuario(String ni, String n, String ap, String ma, LocalDate f,String fot) {
         this.nickname = ni;
         this.nombre = n;

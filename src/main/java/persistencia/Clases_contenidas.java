@@ -1,10 +1,22 @@
 package persistencia;
 
-public class Clases_contenidas {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.*;
+
+@Entity
+public class Clases_contenidas implements Serializable {
+        @Id
+        @ManyToOne
 	private Cuponera cupon;
+        @Id
+        @OneToOne
 	private Actividad act;
 	private int cantidad;
 	
+        public Clases_contenidas(){
+            
+        }
 	public Clases_contenidas(Cuponera cpn, Actividad a, int cant) {
 		this.cupon=cpn;
 		this.act=a;

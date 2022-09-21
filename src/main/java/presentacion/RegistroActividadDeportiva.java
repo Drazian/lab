@@ -57,7 +57,7 @@ public class RegistroActividadDeportiva extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroActividadDeportiva() {
+	public RegistroActividadDeportiva(IController ICnt) {
 		IController control = ICnt;
 		setResizable(true);
 		setClosable(true);

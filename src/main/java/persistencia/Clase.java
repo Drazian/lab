@@ -1,17 +1,25 @@
 package persistencia;
 
+import java.io.Serializable;
 import java.time.*;
+import javax.persistence.*;
 
-public class Clase{
-	private String nombre,url;
+@Entity
+public class Clase implements Serializable{
+        @Id
+	private String nombre;
+        private String url;
 	private int regitrados_min,regitrados_max,cantRegistrados;
 	private LocalDate fecha_reg, fecha_dict;
-	private Localtime hora_dict;
+	private LocalTime hora_dict;
+        @OneToOne
 	private Actividad act;
+        @OneToOne
 	private Profesor prof;
 	
 	
-	public Clase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Actividad a, Profesor p, LocalTime h) {
+	public Clase(){}
+        public Clase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Actividad a, Profesor p, LocalTime h) {
 		this.nombre = n;
 		this.url = u;
 		this.regitrados_min = rmin;
@@ -44,7 +52,7 @@ public class Clase{
         return regitrados_min;
     }
 
-    public int getRax() {
+    public int getRmax() {
         return regitrados_max;
     }
     

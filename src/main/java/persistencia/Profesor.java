@@ -9,15 +9,15 @@ import javax.persistence.*;
 
 @Entity
 public class Profesor extends Usuario implements Serializable{
+       
 	private String descripcion,biografia,sitio_web;
         @ManyToOne
 	private Institucion ins;
         @OneToMany
 	private Set<Clase> cls;
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
-        EntityManager em = emf.createEntityManager();
 	
 	public Profesor(){}
+        
         public Profesor(String ni, String n, String ap, String ma, String desc, String bio, String web, LocalDate f, Institucion i, String foto) {
 		super(ni, n, ap, ma, f, foto);
 		this.descripcion = desc;
@@ -68,7 +68,9 @@ public class Profesor extends Usuario implements Serializable{
     }
     
     public void addClases(Clase c) {
-    	cls.add(c);
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+                EntityManager em = emf.createEntityManager();
+                cls.add(c);
                 em.getTransaction().begin();
                 em.persist(c);
                 em.getTransaction().commit();

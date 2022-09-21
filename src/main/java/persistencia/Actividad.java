@@ -19,8 +19,6 @@ public class Actividad implements Serializable{
 	private Set<Clases_contenidas> asociadas;
         @OneToMany
 	private Map<String, Clase> cls;
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
-        EntityManager em = emf.createEntityManager();
 	
 	
 	public Actividad(){}
@@ -92,7 +90,10 @@ public class Actividad implements Serializable{
     }
     
     public void altaClase(String n, String u, int rmin, int rmax, LocalDate fr, LocalDate fd, Profesor p, LocalTime h) {
-    	Clase c=new Clase(n,u,rmin,rmax,fr,fd,this,p,h);
+    	EntityManagerFactory emf = Persistence.createEntityManagerFactory("conn");
+        EntityManager em = emf.createEntityManager();
+        
+        Clase c=new Clase(n,u,rmin,rmax,fr,fd,this,p,h);
     	cls.put(n, c);
     	p.addClases(c);
         em.getTransaction().begin();

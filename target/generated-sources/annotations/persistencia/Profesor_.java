@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import persistencia.Clase;
 import persistencia.Institucion;
 
-@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-04T17:17:53")
+@Generated(value="EclipseLink-2.7.10.v20211216-rNA", date="2022-09-21T03:00:10")
 @StaticMetamodel(Profesor.class)
 public class Profesor_ extends Usuario_ {
 
