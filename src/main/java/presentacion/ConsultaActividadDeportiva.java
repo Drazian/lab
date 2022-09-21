@@ -284,10 +284,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 
 		cmbActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Institucion i=control.getIns().get(cmbInstituto.getSelectedItem().toString());
-				Iterator<Actividad> iti=i.getActividades().iterator();
-				while(iti.next().getNombre()!=cmbActividad.getSelectedItem().toString()) {}
-				Actividad a=iti.next();
+				Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
 				txtDesc.setText(a.getDescripcion());
 				txtCosto.setText(((Integer)a.getCosto()).toString());
 				txtDur.setText(((Integer)a.getDuracion()).toString());
@@ -311,10 +308,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 
 		cmbClases.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Institucion i=control.getIns().get(cmbInstituto.getSelectedItem().toString());
-				Iterator<Actividad> iti=i.getActividades().iterator();
-				while(iti.next().getNombre()!=cmbActividad.getSelectedItem().toString()) {}
-				Actividad a=iti.next();
+				Actividad a=control.getAct().get(cmbActividad.getSelectedItem().toString());
 				Clase c=a.getClases().get(cmbClases.getSelectedItem().toString());
 				txtUrl.setText(c.getUrl());
 				txtF.setText(c.getFecha_dict().toString());
