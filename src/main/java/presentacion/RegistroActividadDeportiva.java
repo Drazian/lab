@@ -103,6 +103,7 @@ public class RegistroActividadDeportiva extends JInternalFrame {
 		getContentPane().add(txtDescripcion);
 		
 		JComboBox cbInstituto = new JComboBox();
+		cbInstituto.addItem(" ");
 		if(control.getIns()!=null) {
 			for(Map.Entry<String, Institucion> hm:control.getIns().entrySet()) {
 				cbInstituto.addItem(hm.getKey());	
