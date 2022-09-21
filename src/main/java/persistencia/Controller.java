@@ -139,17 +139,95 @@ public class Controller implements IController {
                 
             }
             /*
-            //Institucion
-            String sql="SELECT * FROM INSTITUCION";
-            PreparedStatement pst=conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery(sql);
-            String nom,desc,url;
-            while(rs.next()){    
+            //Socio
+            sql="SELECT * FROM USUARIO WHERE ID=ID FROM SOCIO";
+            pst=conn.prepareStatement(sql);
+            rs = pst.executeQuery(sql);
+            String nick,ape,foto,mail;
+            LocalDate fnac;
+            while(rs.next()){
+                nick=rs.getString("NICKNAME");
+                nom=rs.getString("NOMBRE");
+                ape=rs.getString("APELLIDO");
+                if(rs.getString("FOTO")!=null){
+                foto=rs.getString("FOTO");
+                }else{
+                	foto=" ";
+                }
+                mail=rs.getSring("MAIL");
+                fnac=rs.getValue("FECHANAC");
+                Usuario u=new Socio(nick,nom,ape,mail,fnac,foto);
+                this.usr.put(nick,u);
+            }
+            
+            //Profesor
+            sql="SELECT * FROM USUARIO WHERE ID=ID FROM PROFESOR";
+            pst=conn.prepareStatement(sql);
+            rs = pst.executeQuery(sql);
+            String bio;
+            Institucion i;
+            while(rs.next()){
+                nick=rs.getString("NICKNAME");
+                nom=rs.getString("NOMBRE");
+                ape=rs.getString("APELLIDO");
+                if(rs.getString("FOTO")!=null){
+                foto=rs.getString("FOTO");
+                }else{
+                	foto=" ";
+                }
+                mail=rs.getSring("MAIL");
+                fnac=rs.getValue("FECHANAC");
+                desc=rs.getString("DESCRIPCION");
+                bio=rs.getString("BIOGRAFIA");
+                url=rs.getString("SITIO_WEB");
+                i=ins.get(rs.getString("INS"));
+                Usuario u=new Profesor(nick,nom,ape,mail,desc,bio,url,fnac,i,foto);
+                i.getProfesores().add(u);
+                this.usr.put(nick,u);
+            }
+            
+            //Actividad
+            sql="SELECT * FROM ACTIVIDAD WHERE";
+            pst=conn.prepareStatement(sql);
+            rs = pst.executeQuery(sql);
+            int costo,dur;
+            LocalDate freg;
+            while(rs.next()){
                 nom=rs.getString("NOMBRE");
                 desc=rs.getString("DESCRIPCION");
+                costo=rs.getValue("COSTO");
+                dur=rs.getValue("DURACION");
+                freg=rs.getValue("FECHA_REG");
+                i=ins.get(rs.getString("INS"));
+            	Actividad a=new Actividad(nom,desc,costo,dur,freg,i);
+            	act.put(nom,a);
+            	i.getActividades().add(a);
+            }
+            
+            //Clase
+            sql="SELECT * FROM ACTIVIDAD WHERE";
+            pst=conn.prepareStatement(sql);
+            rs = pst.executeQuery(sql);
+            LocalDate fdict;
+            int rmin,rmax;
+            Actividad a;
+            Profesor p;
+            LocalTime hdict;
+	        while(rs.next()){
+	        	nom=rs.getString("NOMBRE");
                 url=rs.getString("URL");
-                Institucion i=new Institucion(nom,desc,url);
-            }*/
+                rmin=rs.getValue("REGISTRADOS_MIN");
+                rmax=rs.getValue("REGISTRADOS_MAX");
+                freg=rs.getValue("FECHA_REG");
+                fdict=rs.getValue("FECHA_DICT);
+                a=act.get(rs.getString("ACT"));
+                p=usr.get(rs.getString("PROF"));
+                hdict=rs.getValue("HORA_DICT");
+	        	Clase c=new Clase(nom,url,rmin,rmax,freg,fdict,a,p,hdict);
+	        	a.getClases().put(nom,c);
+	        	p.getClases().add(c);
+            }
+            */
             
         }
 	
