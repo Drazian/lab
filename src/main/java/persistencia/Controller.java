@@ -21,6 +21,11 @@ public class Controller implements IController {
 		this.usr=new HashMap<>(); 
 		this.cpn=new HashMap<>();
 		this.act=new HashMap<>();
+            try {
+                inicializar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}    
         
 	public Map<String, Usuario> getUsr(){
@@ -116,6 +121,37 @@ public class Controller implements IController {
 	public void escogerCuponera(Map<String,Cuponera> nombreCupo) {
 		this.cpn = nombreCupo;
 	}
+	
+	public final void inicializar() throws SQLException{
+            String c="jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=CONVERT_TO_NULL";
+            Connection conn = DriverManager.getConnection(c, "tecnologo", "tecnologo");
+            //Institucion
+            String sql="SELECT * FROM Institucion";
+            PreparedStatement pst=conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+            String nom,desc,url;
+            while(rs.next()){    
+                nom=rs.getString("NOMBRE");
+                desc=rs.getString("DESCRIPCION");
+                url=rs.getString("URL");
+                Institucion i=new Institucion(nom,desc,url);
+                this.ins.put(i.getNombre(), i);
+                
+            }
+            /*
+            //Institucion
+            String sql="SELECT * FROM INSTITUCION";
+            PreparedStatement pst=conn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery(sql);
+            String nom,desc,url;
+            while(rs.next()){    
+                nom=rs.getString("NOMBRE");
+                desc=rs.getString("DESCRIPCION");
+                url=rs.getString("URL");
+                Institucion i=new Institucion(nom,desc,url);
+            }*/
+            
+        }
 	
 	
 	
